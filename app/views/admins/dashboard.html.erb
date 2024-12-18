@@ -1,0 +1,8 @@
+<!-- filepath: /d:/Ruby Project/app/views/admins/dashboard.html.erb -->
+<h1>Admin Dashboard</h1>
+<p>Welcome, <%= @admins.AdminName %>!</p>
+<div class="dashboard-content">
+  <!-- Add your dashboard content here -->
+  <p>This is the admin dashboard. You can add various admin functionalities here.</p>
+</div>
+<%= button_to 'Logout', admin_logout_path, method: :delete, class: "btn btn-danger" %>

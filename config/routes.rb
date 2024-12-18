@@ -1,5 +1,10 @@
 # config/routes.rb
 Rails.application.routes.draw do
+  get "admins/index", to: "admin_sessions#index", as: :admin_login
+  post "admins/index", to: "admin_sessions#create"
+  delete "admin/logout", to: "admin_sessions#destroy", as: :admin_logout
+  get "admins/:id/dashboard", to: "admins#dashboard", as: :admin_dashboard
+
   # devise_for :users
   # Other routes...
 
