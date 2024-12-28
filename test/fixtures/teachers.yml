@@ -1,0 +1,15 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  teacherID: 1
+  TeacherName: MyText
+  email: MyText
+  password: MyText
+  created_at: 2024-12-26
+
+two:
+  teacherID: 1
+  TeacherName: MyText
+  email: MyText
+  password: MyText
+  created_at: 2024-12-26

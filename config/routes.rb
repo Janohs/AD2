@@ -1,5 +1,19 @@
 # config/routes.rb
 Rails.application.routes.draw do
+  get "teachers/index", to: "teacher_sessions#index", as: :teacher_login
+  post "teachers/index", to: "teacher_sessions#create"
+  delete "teacher/logout", to: "teacher_sessions#destroy", as: :teacher_logout
+  get "teachers/:id/dashboard", to: "teachers#dashboard", as: :teacher_dashboard
+  get "teachers/:id/exam_report", to: "teachers#exam_report", as: :teacher_exam_report
+  get "teachers/:id/merit_demerit", to: "teachers#merit_demerit", as: :teacher_merit_demerit
+
+  resources :teachers do
+    patch :update_grades, on: :member
+    end
+
+  # ...existing code...
+
+  get "teachers/index"
   get "admins/index", to: "admin_sessions#index", as: :admin_login
   post "admins/index", to: "admin_sessions#create"
   delete "admin/logout", to: "admin_sessions#destroy", as: :admin_logout
