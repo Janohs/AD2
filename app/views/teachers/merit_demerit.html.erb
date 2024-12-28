@@ -1,0 +1,109 @@
+<!-- filepath: /d:/Ruby Project/app/views/teachers/merit_demerit.html.erb -->
+<div class="row flex-grow-1 justify-content-center">
+  <h1 class="mb-4">Merit-Demerit By <%= @teachers.TeacherName %></h1>
+  <!-- Search Form -->
+  <%= form_with(url: teacher_merit_demerit_path(@teachers), method: :get, local: true, class: "mb-4") do %>
+    <div class="input-group">
+      <%= text_field_tag :query, params[:query], class: "form-control", placeholder: "Enter student name" %>
+      <div class="input-group-append">
+        <%= submit_tag "Search", class: "btn btn-primary" %>
+      </div>
+    </div>
+  <% end %>
+  <!-- Student Information -->
+  <% if @student %>
+    <div class="card mb-4">
+      <div class="card-body">
+        <h5 class="card-title">Student Information</h5>
+        <p class="card-text">
+          <strong>NAME:</strong> <%= @student.StudentName %><br>
+          <strong>CLASS:</strong> <%= @student.StudentClass %><br>
+          <strong>Student ID:</strong> <%= @student.StudentID %>
+        </p>
+      </div>
+    </div>
+    <!-- Merit Points and Feedback -->
+    <div id="merits">
+      <% if @merits.any? %>
+        <div class="card mb-4">
+          <div class="card-body">
+            <h5 class="card-title">Merit Points and Feedback</h5>
+            <% @merits.each do |merit| %>
+              <p class="card-text">
+                <strong>Merit Points:</strong> <%= merit.meritPoint %><br>
+                <strong>Feedback:</strong> <%= merit.feedback %>
+              </p>
+            <% end %>
+          </div>
+        </div>
+      <% else %>
+        <p class="text-muted">No merit points available</p>
+      <% end %>
+    </div>
+    <!-- Add Merit Points Form -->
+    <form id="add-merit-form" action="<%= add_merit_teacher_path(@teachers) %>" method="post">
+      <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+      <div class="form-group">
+        <label>Merit Points</label>
+        <input type="number" name="merit[meritPoint]" placeholder="Enter merit points" class="form-control">
+      </div>
+      <div class="form-group">
+        <label>Feedback</label>
+        <textarea name="merit[feedback]" rows="3" placeholder="Enter feedback" class="form-control"></textarea>
+      </div>
+      <%= hidden_field_tag "merit[student_id]", @student.StudentID %>
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+  <% elsif params[:query].present? %>
+    <p class="text-muted">No students found</p>
+  <% end %>
+</div>
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    const form = document.getElementById("add-merit-form");
+    form.addEventListener("submit", function(event) {
+      event.preventDefault();
+      const formData = new FormData(form);
+      fetch(form.action, {
+        method: "POST",
+        headers: {
+          "X-CSRF-Token": formData.get("authenticity_token"),
+          "Accept": "application/javascript"
+        },
+        body: formData
+      })
+      .then(response => response.json())
+      .then(data => {
+        if (data.success) {
+          const meritsDiv = document.getElementById("merits");
+          meritsDiv.innerHTML = data.html;
+        } else {
+          alert("Failed to add merit: " + data.error);
+        }
+      })
+      .catch(error => console.error("Error:", error));
+    });
+  });
+</script>
+<style>
+  .container {
+    max-width: 1200px;
+  }
+  .card {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border: none;
+    transition: transform 0.2s;
+  }
+  .card:hover {
+    transform: translateY(-5px);
+  }
+  .card-header {
+    background-color: #f8f9fa;
+    border-bottom: 1px solid #eee.
+  }
+  .grade-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center.
+  }
+</style>

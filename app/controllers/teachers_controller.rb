@@ -65,12 +65,36 @@ class TeachersController < ApplicationController
     redirect_to teacher_exam_report_path(@teachers)
   end
 
+  def merit_demerit
+    @teachers = Teacher.find(params[:id])
+    if params[:query].present?
+      @student = Student.where('students."StudentName" ILIKE ?', "%#{params[:query]}%").first
+      if @student
+        @merits = Merit.where(StudentID: @student.StudentID)
+      else
+        flash[:alert] = "No student found with the name '#{params[:query]}'"
+      end
+    end
+  end
+
+  def add_merit
+    @teachers = Teacher.find(params[:id])
+    @student = Student.find(merit_params[:student_id])
+    @merit = Merit.new(merit_params.except(:student_id).merge(StudentID: @student.StudentID))
+    if @merit.save
+      redirect_to teacher_merit_demerit_path(@teachers), notice: "Merit added successfully."
+    else
+      redirect_to teacher_merit_demerit_path(@teachers), alert: "Failed to add merit."
+    end
+  end
+
   private
 
   def grades_params
     params.require(:grades).permit!
   end
 
-  def merit_demerit
+  def merit_params
+    params.require(:merit).permit(:meritPoint, :feedback, :student_id)
   end
 end

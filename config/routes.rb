@@ -9,7 +9,11 @@ Rails.application.routes.draw do
 
   resources :teachers do
     patch :update_grades, on: :member
+    patch "add_student_to_subject/:subject_id", to: "teachers#add_student_to_subject", as: "add_student_to_subject"
+    member do
+      post "add_merit", to: "teachers#add_merit", as: "add_merit"
     end
+  end
 
   # ...existing code...
 
