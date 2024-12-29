@@ -42,29 +42,24 @@ class StudentsController < ApplicationController
     @payments = Payment.where(StudentID: @student.id) # for specific student
   end
 
-  def upload_receipt
-    student = Student.find(params[:id])
+  def add_payment
+    @student = Student.find(params[:id])
+    payment_id = SecureRandom.uuid
+    amount = params[:amount].to_f  # Changed this line to access nested params
 
-    if params[:receipt].present?
-      # Get the file from params
-      file = params[:receipt]
+    @payment = Payment.new(
+      PaymentID: payment_id,
+      StudentID: @student.id,
+      Amount: amount,
+      ReceiptURL: nil
+    )
 
-      # Upload the file to Supabase storage (receipts bucket)
-      supabase = Supabase::Client.new(url: ENV["SUPABASE_URL"], api_key: ENV["SUPABASE_API_KEY"])
-      response = supabase.storage.from("receipts").upload(
-        "receipts/#{student.id}/#{file.original_filename}",  # path in the bucket
-        file.tempfile,                                         # file to upload
-        content_type: file.content_type                       # mime type
-      )
-
-      if response.success?
-        student.update(receipt_url: response.data["Key"])  # Assuming you store the URL in the Student model
-        redirect_to student_path(student), notice: "Receipt uploaded successfully."
-      else
-        redirect_to student_path(student), alert: "Failed to upload receipt."
-      end
+    if @payment.save
+      flash[:notice] = "Payment added successfully."
+      redirect_to student_canteen_path(@student)
     else
-      redirect_to student_path(student), alert: "No file selected."
+      flash[:alert] = "Failed to add payment: #{@payment.errors.full_messages.join(', ')}"
+      redirect_to student_canteen_path(@student)
     end
   end
 

@@ -64,6 +64,7 @@ Rails.application.routes.draw do
       get "merit", to: "students#merit", as: :merit
       get "exam", to: "students#exam", as: :exam
       post "add_merit", to: "students#add_merit", as: :add_merit
+      post "add_payment", to: "students#add_payment", as: :add_payment
 
       get "download_exam_report", to: "students#download_exam_report", as: :download_exam_report
     end
