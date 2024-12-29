@@ -42,6 +42,32 @@ class StudentsController < ApplicationController
     @payments = Payment.where(StudentID: @student.id) # for specific student
   end
 
+  def upload_receipt
+    student = Student.find(params[:id])
+
+    if params[:receipt].present?
+      # Get the file from params
+      file = params[:receipt]
+
+      # Upload the file to Supabase storage (receipts bucket)
+      supabase = Supabase::Client.new(url: ENV["SUPABASE_URL"], api_key: ENV["SUPABASE_API_KEY"])
+      response = supabase.storage.from("receipts").upload(
+        "receipts/#{student.id}/#{file.original_filename}",  # path in the bucket
+        file.tempfile,                                         # file to upload
+        content_type: file.content_type                       # mime type
+      )
+
+      if response.success?
+        student.update(receipt_url: response.data["Key"])  # Assuming you store the URL in the Student model
+        redirect_to student_path(student), notice: "Receipt uploaded successfully."
+      else
+        redirect_to student_path(student), alert: "Failed to upload receipt."
+      end
+    else
+      redirect_to student_path(student), alert: "No file selected."
+    end
+  end
+
   def profile
     @student = Student.find(params[:id])
     # Add any logic needed for the student's profile page

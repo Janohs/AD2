@@ -1,5 +1,6 @@
 # config/routes.rb
 Rails.application.routes.draw do
+  get "storage/test"
   get "teachers/index", to: "teacher_sessions#index", as: :teacher_login
   post "teachers/index", to: "teacher_sessions#create"
   delete "teacher/logout", to: "teacher_sessions#destroy", as: :teacher_logout
@@ -13,6 +14,12 @@ Rails.application.routes.draw do
     member do
       post "add_merit", to: "teachers#add_merit", as: "add_merit"
     end
+  end
+
+  # storage test
+  get "storage/test"
+  resources :students do
+    post "upload_receipt", on: :member
   end
 
   # ...existing code...

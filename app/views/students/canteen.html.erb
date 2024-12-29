@@ -125,7 +125,10 @@
             <li>Upload a screenshot of the receipt into the portal below.</li>
           </ol>
           <!-- Button to trigger the upload modal -->
-          <button class="btn custom-btn mt-3" data-bs-toggle="modal" data-bs-target="#uploadModal">Upload Receipt</button>
+          <%= form_with(model: @student, url: upload_receipt_student_path(@student), method: :post, multipart: true) do |form| %>
+            <%= form.file_field :receipt, class: 'form-control' %>
+            <%= form.submit "Upload Receipt", class: 'btn btn-primary mt-3' %>
+          <% end %>
           <!-- Add Payment History Section -->
           <h5 class="mt-4">Payment History - Placeholder, will be on separate page</h5>
           <div class="table-responsive">

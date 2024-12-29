@@ -6,6 +6,14 @@ local:
   service: Disk
   root: <%= Rails.root.join("storage") %>
 
+supabase:
+  service: S3
+  endpoint: https://<your-project-id>.supabase.co/storage/v1
+  access_key_id: <%= ENV['SUPABASE_KEY'] %>
+  secret_access_key: <%= ENV['SUPABASE_KEY'] %>
+  bucket: receipts
+  region: auto
+  force_path_style: true
 # Use bin/rails credentials:edit to set the AWS secrets (as aws:access_key_id|secret_access_key)
 # amazon:
 #   service: S3
