@@ -23,6 +23,8 @@ gem "jbuilder"
 gem "http"
 gem "aws-sdk-s3", require: false
 
+# pagination
+gem "kaminari"
 
 # bootstrap
 gem "bootstrap", "~> 5.1.0"

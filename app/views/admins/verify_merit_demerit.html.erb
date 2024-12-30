@@ -1,0 +1,50 @@
+<h1>Verify Merit-Demerit</h1>
+<p>Here you can verify merit and demerit points.</p>
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Merit ID</th>
+      <th scope="col">Student ID</th>
+      <th scope="col">Merit Points</th>
+      <th scope="col">Feedback</th>
+      <th scope="col">Date</th>
+      <th scope="col">Status</th>
+      <th scope="col">Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @merits.each do |merit| %>
+      <tr>
+        <td><%= merit.id %></td>
+        <td><%= merit.StudentID %></td>
+        <td><%= merit.meritPoint %></td>
+        <td><%= merit.feedback %></td>
+        <td><%= merit.created_at.strftime("%Y-%m-%d") %></td>
+        <td><%= merit.status ? 'Verified' : 'Not Verified' %></td>
+        <td>
+          <% unless merit.status %>
+            <%= button_to 'Accept', accept_merit_admin_path(merit), method: :patch, class: 'btn btn-success btn-sm' %>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<div class="pagination-container">
+  <%= paginate @merits %>
+</div>
+<style>
+  .pagination-container {
+    text-align: center;
+    margin-top: 20px;
+  }
+
+  .pagination-container .pagination {
+    display: inline-block;
+  }
+
+  .pagination-container .pagination a,
+  .pagination-container .pagination span {
+    margin: 0 5px;
+  }
+</style>

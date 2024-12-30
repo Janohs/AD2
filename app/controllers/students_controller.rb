@@ -70,7 +70,7 @@ class StudentsController < ApplicationController
 
   def merit
     @student = Student.find(params[:id])
-    @merits = Merit.where(StudentID: @student.id) # Fetch merits for specific student
+    @merits = Merit.where(StudentID: @student.id, status: true) # Fetch merits for specific student
     # Add any logic needed for the student's merit page
   end
 

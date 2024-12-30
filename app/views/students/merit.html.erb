@@ -168,12 +168,17 @@
         <div class="row flex-grow-1">
           <div class="history-card">
             <h2>Merit History</h2>
-            <% @merits.each do |merit| %>
-              <div class="history-item">
-                <p><strong>Merit ID:</strong> <%= merit.meritID %></p>
-                <p><strong>Points:</strong> <%= merit.meritPoint %></p>
-                <p><strong>Feedback:</strong> <%= merit.feedback %></p>
-              </div>
+            <% if @merits.present? %>
+              <% @merits.each do |merit| %>
+                <div class="history-item">
+                  <p><strong>Merit ID:</strong> <%= merit.id %></p>
+                  <p><strong>Points:</strong> <%= merit.meritPoint %></p>
+                  <p><strong>Feedback:</strong> <%= merit.feedback %></p>
+                  <p><strong>Date:</strong> <%= merit.created_at.strftime("%Y-%m-%d") %></p>
+                </div>
+              <% end %>
+            <% else %>
+              <p>No verified merits found.</p>
             <% end %>
           </div>
         </div>

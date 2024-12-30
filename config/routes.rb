@@ -30,6 +30,16 @@ Rails.application.routes.draw do
   delete "admin/logout", to: "admin_sessions#destroy", as: :admin_logout
   get "admins/:id/dashboard", to: "admins#dashboard", as: :admin_dashboard
 
+  resources :admins do
+    collection do
+      get "verify_merit_demerit"
+      get "class_ranking"
+      get "verify_payment"
+    end
+    member do
+      patch "accept_merit"
+    end
+  end
   # devise_for :users
   # Other routes...
 
