@@ -22,7 +22,6 @@ RUN apt-get update -qq && \
     apt-get install --no-install-recommends -y libpq-dev && \
     rm -rf /var/lib/apt/lists /var/cache/apt/archives
 
-
 # Set production environment
 ENV RAILS_ENV="production" \
     BUNDLE_DEPLOYMENT="1" \
