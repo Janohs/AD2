@@ -56,10 +56,12 @@ RUN chmod +x bin/* && \
     sed -i "s/\r$//g" bin/* && \
     sed -i 's/ruby\.exe$/ruby/' bin/*
 
+
 # Precompiling assets for production
 RUN RAILS_MASTER_KEY=${RAILS_MASTER_KEY} ./bin/rails assets:precompile
 
-# Final stage for app image
+
+# Final stage for app image 
 FROM base
 
 # Copy built artifacts: gems, application
