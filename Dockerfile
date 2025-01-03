@@ -59,7 +59,8 @@ RUN chmod +x bin/* && \
 # Precompiling assets for production (Render will set RAILS_MASTER_KEY)
 RUN ./bin/rails assets:precompile
 
-# Final stage for app image
+
+# Final stage for app image 
 FROM base
 
 # Copy built artifacts: gems, application
