@@ -55,7 +55,7 @@ RUN chmod +x bin/* && \
 
 
 # Precompiling assets for production
-RUN RAILS_MASTER_KEY=${RAILS_MASTER_KEY} ./bin/rails assets:precompile
+RUN SECRET_KEY_BASE=dummy_secret_key ./bin/rails assets:precompile
 
 
 # Final stage for app image 
