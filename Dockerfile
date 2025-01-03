@@ -13,6 +13,7 @@ RUN apt-get update -qq && \
 # Install Node.js and Yarn
 RUN curl -sL https://deb.nodesource.com/setup_14.x | bash - && \
     apt-get install -y nodejs && \
+    apt-get install -y npm && \
     npm install -g yarn && \
     rm -rf /var/lib/apt/lists /var/cache/apt/archives
 
