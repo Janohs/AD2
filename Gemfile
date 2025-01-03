@@ -20,6 +20,12 @@ gem "jbuilder"
 # Use Redis adapter to run Action Cable in production
 # gem "redis", ">= 4.0.1"
 
+gem "http"
+gem "aws-sdk-s3", require: false
+
+# pagination
+gem "kaminari"
+
 # bootstrap
 gem "bootstrap", "~> 5.1.0"
 gem "jquery-rails" # Add jQuery if you want Bootstrap's JavaScript components

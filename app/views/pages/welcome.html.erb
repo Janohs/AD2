@@ -36,8 +36,10 @@
             <span class="text-muted">Logo</span>
           </div>
           <h1 class="text-center mb-4">Welcome</h1>
-          <%= link_to 'Teacher', login_path, class: 'button' %> <!-- Link to login -->
+          <!-- filepath: /d:/Ruby Project/app/views/pages/welcome.html.erb -->
+          <%= link_to 'Teacher', teacher_login_path, class: 'button' %> <!-- Link to teacher login -->
           <%= link_to 'Parent', login_path, class: 'button' %>  <!-- Link to login -->
+          <%= link_to 'Admin', admins_index_path, class: 'button' %> <!-- Link to admin index -->
         </div>
       </div>
     </div>

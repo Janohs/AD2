@@ -1,0 +1,77 @@
+<!-- filepath: /d:/Ruby Project/app/views/teachers/dashboard.html.erb -->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.3.3/css/bootstrap.min.css">
+    <title>Teacher Dashboard</title>
+    <%= stylesheet_link_tag 'application', media: 'all' %>
+    <style>
+      body {
+        position: relative;
+      }
+      .card-button {
+        background-color: #E57E0C;
+        height: 20vh;
+        border-radius: 15px;
+        width: 100%;
+        color: white;
+        text-decoration: none;
+      }
+      .card-button .icon {
+        font-size: 24px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-12">
+          <div class="content" style="margin-left: 100px; padding-left: 0;">
+            <!-- Welcome Card -->
+            <div class="card2 mb-3" style="border-radius: 15px;">
+              <div class="card-body">
+                <div class="d-flex align-items-center mb-3">
+                  <div class="logo-placeholder rounded-circle bg-secondary" style="width: 50px; height: 50px; margin-right: 10px;"></div>
+                  <div class="ml-3">
+                    <div style="font-family: 'Montserrat', sans-serif; font-size: 20px;">Welcome, <%= @teachers.TeacherName %></div>
+                    <div style="font-family: 'Montserrat', sans-serif; font-size: 16px;">SL Sek Integrasi Al Alusi</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- Main Buttons Grouped in the Middle -->
+            <div class="grouped-content">
+              <!-- Examination Button -->
+              <div class="card2 mb-3">
+                <div class="card-body d-flex align-items-center justify-content-center">
+                  <a href="<%= teacher_exam_report_path(@teachers) %>" class="card-button">
+                    <div class="text-center">
+                      <div class="icon">📚</div>
+                      <div>Examination</div>
+                    </div>
+                  </a>
+                </div>
+              </div>
+              <!-- Merit-Demerit Button -->
+              <div class="card2 mb-3">
+                <div class="card-body d-flex align-items-center justify-content-center">
+                  <a href="<%= teacher_merit_demerit_path(@teachers) %>" class="card-button">
+                    <div class="text-center">
+                      <div class="icon">📋</div>
+                      <div>Merit-Demerit</div>
+                    </div>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.3/js/bootstrap.min.js"></script>
+  </body>
+</html>

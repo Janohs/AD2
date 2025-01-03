@@ -1,0 +1,13 @@
+<h1>Admin Dashboard</h1>
+<p>Welcome, <%= @admins.AdminName %>!</p>
+<div class="dashboard-content">
+  <!-- Add your dashboard content here -->
+  <p>This is the admin dashboard. You can add various admin functionalities here.</p>
+  <!-- Buttons for admin functionalities -->
+  <div class="admin-buttons">
+    <%= button_to 'Verify Merit-Demerit', verify_merit_demerit_admins_path, method: :get, class: "btn btn-primary mb-3" %>
+    <%= button_to 'Class Ranking', class_ranking_admins_path, method: :get, class: "btn btn-primary mb-3" %>
+    <%= button_to 'Verify Payment', verify_payment_admins_path, method: :get, class: "btn btn-primary mb-3" %>
+  </div>
+</div>
+<%= button_to 'Logout', admin_logout_path, method: :delete, class: "btn btn-danger" %>

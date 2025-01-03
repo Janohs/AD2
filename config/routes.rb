@@ -1,5 +1,45 @@
 # config/routes.rb
 Rails.application.routes.draw do
+  get "storage/test"
+  get "teachers/index", to: "teacher_sessions#index", as: :teacher_login
+  post "teachers/index", to: "teacher_sessions#create"
+  delete "teacher/logout", to: "teacher_sessions#destroy", as: :teacher_logout
+  get "teachers/:id/dashboard", to: "teachers#dashboard", as: :teacher_dashboard
+  get "teachers/:id/exam_report", to: "teachers#exam_report", as: :teacher_exam_report
+  get "teachers/:id/merit_demerit", to: "teachers#merit_demerit", as: :teacher_merit_demerit
+
+  resources :teachers do
+    patch :update_grades, on: :member
+    patch "add_student_to_subject/:subject_id", to: "teachers#add_student_to_subject", as: "add_student_to_subject"
+    member do
+      post "add_merit", to: "teachers#add_merit", as: "add_merit"
+    end
+  end
+
+  # storage test
+  get "storage/test"
+  resources :students do
+    post "upload_receipt", on: :member
+  end
+
+  # ...existing code...
+
+  get "teachers/index"
+  get "admins/index", to: "admin_sessions#index", as: :admin_login
+  post "admins/index", to: "admin_sessions#create"
+  delete "admin/logout", to: "admin_sessions#destroy", as: :admin_logout
+  get "admins/:id/dashboard", to: "admins#dashboard", as: :admin_dashboard
+
+  resources :admins do
+    collection do
+      get "verify_merit_demerit"
+      get "class_ranking"
+      get "verify_payment"
+    end
+    member do
+      patch "accept_merit"
+    end
+  end
   # devise_for :users
   # Other routes...
 
@@ -34,6 +74,7 @@ Rails.application.routes.draw do
       get "merit", to: "students#merit", as: :merit
       get "exam", to: "students#exam", as: :exam
       post "add_merit", to: "students#add_merit", as: :add_merit
+      post "add_payment", to: "students#add_payment", as: :add_payment
 
       get "download_exam_report", to: "students#download_exam_report", as: :download_exam_report
     end

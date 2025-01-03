@@ -1,0 +1,18 @@
+<!-- filepath: /d:/Ruby Project/app/views/admin_sessions/index.html.erb -->
+<h1>Admin Login</h1>
+<%= form_with(url: admin_login_path, local: true) do |f| %>
+  <div class="form-group">
+    <%= f.label :email %>
+    <%= f.email_field :email, class: "form-control" %>
+  </div>
+  <div class="form-group">
+    <%= f.label :password %>
+    <%= f.password_field :password, class: "form-control" %>
+  </div>
+  <div class="form-group">
+    <%= f.submit "Log In", class: "btn btn-primary" %>
+  </div>
+<% end %>
+<% if flash[:alert] %>
+  <div class="alert alert-danger"><%= flash[:alert] %></div>
+<% end %>

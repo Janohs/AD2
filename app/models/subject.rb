@@ -1,5 +1,6 @@
 class Subject < ApplicationRecord
   belongs_to :student, foreign_key: "StudentID"
+  has_many :students, through: :student_subjects
   has_many :grades, foreign_key: "SubjectID"
   self.primary_key = "SubjectID"
 

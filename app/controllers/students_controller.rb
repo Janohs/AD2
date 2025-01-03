@@ -42,6 +42,27 @@ class StudentsController < ApplicationController
     @payments = Payment.where(StudentID: @student.id) # for specific student
   end
 
+  def add_payment
+    @student = Student.find(params[:id])
+    payment_id = SecureRandom.uuid
+    amount = params[:amount].to_f  # Changed this line to access nested params
+
+    @payment = Payment.new(
+      PaymentID: payment_id,
+      StudentID: @student.id,
+      Amount: amount,
+      ReceiptURL: nil
+    )
+
+    if @payment.save
+      flash[:notice] = "Payment added successfully."
+      redirect_to student_canteen_path(@student)
+    else
+      flash[:alert] = "Failed to add payment: #{@payment.errors.full_messages.join(', ')}"
+      redirect_to student_canteen_path(@student)
+    end
+  end
+
   def profile
     @student = Student.find(params[:id])
     # Add any logic needed for the student's profile page
@@ -49,7 +70,7 @@ class StudentsController < ApplicationController
 
   def merit
     @student = Student.find(params[:id])
-    @merits = Merit.where(StudentID: @student.id) # Fetch merits for specific student
+    @merits = Merit.where(StudentID: @student.id, status: true) # Fetch merits for specific student
     # Add any logic needed for the student's merit page
   end
 
