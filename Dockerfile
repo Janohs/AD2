@@ -19,14 +19,17 @@ RUN curl -sL https://deb.nodesource.com/setup_14.x | bash - && \
 
 # Install PostgreSQL development libraries
 RUN apt-get update -qq && \
-    apt-get install --no-install-recommends -y libpq-dev && \
+    apt-get install --no-install-recommends -y libpq-dev postgresql-client && \
     rm -rf /var/lib/apt/lists /var/cache/apt/archives
 
 # Set production environment
 ENV RAILS_ENV="production" \
     BUNDLE_DEPLOYMENT="1" \
     BUNDLE_PATH="/usr/local/bundle" \
-    BUNDLE_WITHOUT="development" 
+    BUNDLE_WITHOUT="development"
+
+# Copy .env file
+COPY .env /rails/.env
 
 # Throw-away build stage to reduce size of final image
 FROM base AS build
@@ -53,8 +56,9 @@ RUN chmod +x bin/* && \
     sed -i "s/\r$//g" bin/* && \
     sed -i 's/ruby\.exe$/ruby/' bin/*
 
-# Precompiling assets for production (Render will set RAILS_MASTER_KEY)
-RUN ./bin/rails assets:precompile
+
+# Precompiling assets for production
+RUN RAILS_MASTER_KEY=${RAILS_MASTER_KEY} ./bin/rails assets:precompile
 
 
 # Final stage for app image 
