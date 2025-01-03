@@ -16,6 +16,7 @@ RUN apt-get update -qq && \
     apt-get install --no-install-recommends -y curl libjemalloc2 libvips sqlite3 && \
     rm -rf /var/lib/apt/lists /var/cache/apt/archives
 
+# Added line to commit
 # Install PostgreSQL development libraries
 RUN apt-get update -qq && \
     apt-get install --no-install-recommends -y libpq-dev && \
