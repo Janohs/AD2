@@ -28,8 +28,7 @@ ENV RAILS_ENV="production" \
     BUNDLE_PATH="/usr/local/bundle" \
     BUNDLE_WITHOUT="development"
 
-# Copy master.key
-COPY config/master.key /rails/config/master.key
+
 
 # Copy .env file
 COPY .env /rails/.env
