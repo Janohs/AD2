@@ -29,7 +29,7 @@ ENV RAILS_ENV="production" \
     BUNDLE_WITHOUT="development"
 
 # Copy master.key
-COPY config/master.key config/master.key
+COPY config/master.key /rails/config/master.key
 
 # Throw-away build stage to reduce size of final image
 FROM base AS build
