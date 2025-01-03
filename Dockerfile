@@ -1,6 +1,6 @@
 # Make sure RUBY_VERSION matches the Ruby version in .ruby-version
-ARG RUBY_VERSION=3.3.5
-FROM docker.io/library/ruby:$RUBY_VERSION-slim AS base
+ARG RUBY_VERSION=3.3
+FROM ruby:$RUBY_VERSION-slim AS base
 
 # Rails app lives here
 WORKDIR /rails
@@ -28,7 +28,6 @@ ENV RAILS_ENV="production" \
     BUNDLE_PATH="/usr/local/bundle" \
     BUNDLE_WITHOUT="development" 
 
-
 # Throw-away build stage to reduce size of final image
 FROM base AS build
 
@@ -54,10 +53,11 @@ RUN chmod +x bin/* && \
     sed -i "s/\r$//g" bin/* && \
     sed -i 's/ruby\.exe$/ruby/' bin/*
 
-# Precompiling assets for production
+# Precompiling assets for production (Render will set RAILS_MASTER_KEY)
 RUN ./bin/rails assets:precompile
 
-# Final stage for app image
+
+# Final stage for app image 
 FROM base
 
 # Copy built artifacts: gems, application
