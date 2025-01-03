@@ -1,6 +1,6 @@
 # Make sure RUBY_VERSION matches the Ruby version in .ruby-version
-ARG RUBY_VERSION=3.3.5
-FROM docker.io/library/ruby:$RUBY_VERSION-slim AS base
+ARG RUBY_VERSION=3.3
+FROM ruby:$RUBY_VERSION-slim AS base
 
 # Rails app lives here
 WORKDIR /rails
@@ -33,6 +33,9 @@ COPY config/master.key /rails/config/master.key
 
 # Copy .env file
 COPY .env /rails/.env
+
+# Throw-away build stage to reduce size of final image
+FROM base AS build
 
 # Install packages needed to build gems
 RUN apt-get update -qq && \
