@@ -32,9 +32,6 @@ ENV RAILS_ENV="production" \
     DB_HOST=your_db_host \
     DB_PORT=your_db_port
 
-# Copy master.key
-COPY config/master.key /rails/config/master.key
-
 # Throw-away build stage to reduce size of final image
 FROM base AS build
 
