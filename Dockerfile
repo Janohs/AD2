@@ -28,9 +28,6 @@ ENV RAILS_ENV="production" \
     BUNDLE_PATH="/usr/local/bundle" \
     BUNDLE_WITHOUT="development"
 
-# Copy .env file
-COPY .env /rails/.env
-
 # Throw-away build stage to reduce size of final image
 FROM base AS build
 
