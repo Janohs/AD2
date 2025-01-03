@@ -27,7 +27,13 @@ ENV RAILS_ENV="production" \
     BUNDLE_DEPLOYMENT="1" \
     BUNDLE_PATH="/usr/local/bundle" \
     BUNDLE_WITHOUT="development" \
-    SECRET_KEY_BASE=your_secret_key_base
+    DB_USERNAME=your_db_username \
+    DB_PASSWORD=your_db_password \
+    DB_HOST=your_db_host \
+    DB_PORT=your_db_port
+
+# Copy master.key
+COPY config/master.key /rails/config/master.key
 
 # Throw-away build stage to reduce size of final image
 FROM base AS build
