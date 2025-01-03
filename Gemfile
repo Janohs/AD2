@@ -21,7 +21,7 @@ gem "jbuilder"
 # gem "redis", ">= 4.0.1"
 
 gem "http"
-gem "aws-sdk-s3", require: false
+
 
 # pagination
 gem "kaminari"
