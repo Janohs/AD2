@@ -28,6 +28,9 @@ ENV RAILS_ENV="production" \
     BUNDLE_PATH="/usr/local/bundle" \
     BUNDLE_WITHOUT="development"
 
+# Copy master.key
+COPY config/master.key config/master.key
+
 # Throw-away build stage to reduce size of final image
 FROM base AS build
 
@@ -54,7 +57,7 @@ RUN chmod +x bin/* && \
     sed -i 's/ruby\.exe$/ruby/' bin/*
 
 # Precompiling assets for production without requiring secret RAILS_MASTER_KEY
-RUN SECRET_KEY_BASE_DUMMY=1 ./bin/rails assets:precompile
+RUN SECRET_KEY_BASE=a889146a81c7ecd06d071ab1ecc2651b ./bin/rails assets:precompile
 
 # Final stage for app image
 FROM base
