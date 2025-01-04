@@ -10,7 +10,7 @@ default: &default
 
 development:
   <<: *default
-  database: myapp_development
+  url: postgresql://postgres.jcixfyhrvesbyjtuinxe:utmSIRAJ69hime%40lucy@aws-0-ap-southeast-1.pooler.supabase.com:6543/postgres
 
 test:
   <<: *default
@@ -18,4 +18,4 @@ test:
 
 production:
   <<: *default
-  database: postgres
+  url: postgresql://postgres.jcixfyhrvesbyjtuinxe:utmSIRAJ69hime%40lucy@aws-0-ap-southeast-1.pooler.supabase.com:6543/postgres
