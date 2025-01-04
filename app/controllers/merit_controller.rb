@@ -1,4 +1,4 @@
-class MeritsController < ApplicationController
+class MeritController < ApplicationController
   def index
     @merits = Merit.all
   end
