@@ -53,10 +53,12 @@ RUN chmod +x bin/* && \
     sed -i "s/\r$//g" bin/* && \
     sed -i 's/ruby\.exe$/ruby/' bin/*
 
+
 # Precompiling assets for production
 RUN SECRET_KEY_BASE=dummy_secret_key ./bin/rails assets:precompile
 
-# Final stage for app image
+
+# Final stage for app image 
 FROM base
 
 # Copy built artifacts: gems, application
