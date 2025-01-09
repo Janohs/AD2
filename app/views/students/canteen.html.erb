@@ -125,13 +125,17 @@
             <li>Enter the amount paid into the portal below.</li>
           </ol>
           <!-- Form to enter the amount -->
-          <%= form_with(url: add_payment_student_path(@student), method: :post, local: true) do |form| %>
-            <div class="form-group">
-              <%= form.label :amount, "Amount (RM)" %>
-              <%= form.text_field :amount, class: 'form-control', placeholder: 'Enter amount in RM' %>
-            </div>
-            <%= form.submit "Submit Payment", class: 'btn btn-primary mt-3' %>
-          <% end %>
+          <div style="display:none;">
+            <%= form_with(url: add_payment_student_path(@student), method: :post, local: true) do |form| %>
+              <div class="form-group">
+                <%= form.label :amount, "Amount (RM)" %>
+                <%= form.text_field :amount, class: 'form-control', placeholder: 'Enter amount in RM' %>
+              </div>
+              <%= form.submit "Submit Payment", class: 'btn btn-primary mt-3' %>
+            <% end %>
+          </div>
+          <!-- Button to trigger the form -->
+          <%= link_to 'Fill Out Form', 'https://docs.google.com/forms/d/e/1FAIpQLSea9czP9spvDoedS7N44dev4spYTJe0qW0_EyztdvdSfCzaow/viewform?usp=header', target: '_blank', class: 'btn btn-primary', style: 'background-color: #E57E0C; color: white;' %>
           <!-- Add Payment History Section -->
           <h5 class="mt-4">Payment History</h5>
           <div class="table-responsive" style="max-height: 400px; overflow-y: auto;">
