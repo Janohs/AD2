@@ -1,50 +1,180 @@
-<h1>Verify Merit-Demerit</h1>
-<p>Here you can verify merit and demerit points.</p>
-<table class="table">
-  <thead>
-    <tr>
-      <th scope="col">Merit ID</th>
-      <th scope="col">Student ID</th>
-      <th scope="col">Merit Points</th>
-      <th scope="col">Feedback</th>
-      <th scope="col">Date</th>
-      <th scope="col">Status</th>
-      <th scope="col">Actions</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @merits.each do |merit| %>
+
+  <!-- Header Section -->
+  <div class="text-center mb-4">
+    <h1 class="page-title">Verify Merit-Demerit</h1>
+    <p class="text-muted">Here you can verify merit and demerit points.</p>
+  </div>
+
+  <!-- Table Section -->
+  <div class="table-responsive">
+    <table class="table table-striped table-hover align-middle">
+      <thead class="thead-light">
       <tr>
-        <td><%= merit.id %></td>
-        <td><%= merit.StudentID %></td>
-        <td><%= merit.meritPoint %></td>
-        <td><%= merit.feedback %></td>
-        <td><%= merit.created_at.strftime("%Y-%m-%d") %></td>
-        <td><%= merit.status ? 'Verified' : 'Not Verified' %></td>
-        <td>
-          <% unless merit.status %>
-            <%= button_to 'Accept', accept_merit_admin_path(merit), method: :patch, class: 'btn btn-success btn-sm' %>
-          <% end %>
-        </td>
+        <th scope="col">Merit ID</th>
+        <th scope="col">Student ID</th>
+        <th scope="col">Merit Points</th>
+        <th scope="col">Feedback</th>
+        <th scope="col">Date</th>
+        <th scope="col">Status</th>
+        <th scope="col">Actions</th>
       </tr>
-    <% end %>
-  </tbody>
-</table>
-<div class="pagination-container">
-  <%= paginate @merits %>
-</div>
+      </thead>
+      <tbody>
+      <% if @merits.any? %>
+        <% @merits.each do |merit| %>
+          <tr>
+            <td><%= merit.id %></td>
+            <td><%= merit.StudentID %></td>
+            <td><%= merit.meritPoint %></td>
+            <td><%= merit.feedback.presence || 'No feedback provided' %></td>
+            <td><%= merit.created_at.strftime("%Y-%m-%d") %></td>
+            <td>
+                <span class="badge <%= merit.status ? 'bg-verified' : 'bg-pending' %>">
+                  <%= merit.status ? 'Verified' : 'Pending' %>
+                </span>
+            </td>
+            <td>
+              <% unless merit.status %>
+                <%= button_to 'Accept', accept_merit_admin_path(merit), method: :patch, class: 'btn btn-primary btn-sm' %>
+              <% end %>
+            </td>
+          </tr>
+        <% end %>
+      <% else %>
+        <tr>
+          <td colspan="7" class="text-center text-muted">No merit records available.</td>
+        </tr>
+      <% end %>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Pagination Section -->
+  <div class="pagination-container">
+    <%= paginate @merits %>
+  </div>
+
 <style>
-  .pagination-container {
-    text-align: center;
-    margin-top: 20px;
-  }
+    /* General Container Styles */
+    .verify-container {
+        max-width: 900px;
+        margin: 0 auto;
+        background-color: #ffffff;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        border-radius: 8px;
+        padding: 20px;
+    }
 
-  .pagination-container .pagination {
-    display: inline-block;
-  }
+    /* Header Section */
+    .page-title {
+        font-size: 2rem;
+        font-weight: bold;
+        background: linear-gradient(to right, #FF7A00, #FF921A);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        color: #FF921A; /* Fallback color */
+        margin-bottom: 5px;
+    }
 
-  .pagination-container .pagination a,
-  .pagination-container .pagination span {
-    margin: 0 5px;
-  }
+    p.text-muted {
+        color: #6c757d;
+        font-size: 0.95rem;
+    }
+
+    /* Table Section */
+    .table {
+        margin-bottom: 20px;
+    }
+
+    .table-striped tbody tr:nth-of-type(odd) {
+        background-color: #fdf8f4;
+    }
+
+    .table-hover tbody tr:hover {
+        background-color: #fff5eb;
+    }
+
+    .thead-light th {
+        background-color: #FF921A;
+        color: white;
+        text-transform: uppercase;
+        font-size: 0.85rem;
+        font-weight: bold;
+        text-align: center;
+    }
+
+    .table td, .table th {
+        text-align: center;
+        vertical-align: middle;
+        font-size: 0.9rem;
+    }
+
+    /* Badge Styles */
+    .badge.bg-verified {
+        background-color: #FF921A;
+        color: #ffffff;
+        padding: 5px 10px;
+        border-radius: 8px;
+        font-size: 0.8rem;
+    }
+
+    .badge.bg-pending {
+        background-color: #ffc107;
+        color: #343a40;
+        padding: 5px 10px;
+        border-radius: 8px;
+        font-size: 0.8rem;
+    }
+
+    /* Button Styles */
+    .btn-primary, .btn-primary:hover {
+        background-color: #FF921A;
+        border-color: #FF921A;
+        color: white;
+    }
+
+    .btn-primary.btn-sm {
+        padding: 5px 15px;
+        font-size: 0.85rem;
+        font-weight: 600;
+    }
+
+    /* Pagination Styles */
+    .pagination-container {
+        text-align: center;
+        margin-top: 20px;
+    }
+
+    .pagination-container .pagination {
+        display: inline-block;
+    }
+
+    .pagination-container .pagination a,
+    .pagination-container .pagination span {
+        margin: 0 4px;
+        padding: 6px 12px;
+        font-size: 0.9rem;
+        color: #ffffff;
+        background-color: #FF921A;
+        border: 1px solid #FF921A;
+        border-radius: 4px;
+        text-decoration: none;
+        transition: all 0.2s ease-in-out;
+    }
+
+    .pagination-container .pagination a {
+        background-color: #ffffff;
+        color: #FF921A;
+    }
+
+    .pagination-container .pagination a:hover {
+        background-color: #FF921A;
+        color: #ffffff;
+    }
+
+    .pagination-container .active span {
+        background-color: #FF921A;
+        color: #ffffff;
+        border: 1px solid #FF921A;
+    }
 </style>

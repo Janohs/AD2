@@ -70,7 +70,7 @@ class TeachersController < ApplicationController
     if params[:query].present?
       @student = Student.where('students."StudentName" ILIKE ?', "%#{params[:query]}%").first
       if @student
-        @merits = Merit.where(StudentID: @student.StudentID)
+        @merits = Merit.where(StudentID: @student.StudentID).page(params[:page]).per(5)
       else
         flash[:alert] = "No student found with the name '#{params[:query]}'"
       end
