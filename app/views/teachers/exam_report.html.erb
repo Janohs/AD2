@@ -1,82 +1,165 @@
 <!-- filepath: /d:/Ruby Project/app/views/teachers/exam_report.html.erb -->
-<div class="row flex-grow-1">
-  <h1 class="mb-4">Examination Report By <%= @teachers.TeacherName %></h1>
-  <!-- Search Form -->
-  <%= form_with(url: teacher_exam_report_path(@teachers), method: :get, local: true, class: "mb-4") do %>
-    <div class="input-group">
-      <%= text_field_tag :query, params[:query], class: "form-control", placeholder: "Enter student name" %>
-      <div class="input-group-append">
-        <%= submit_tag "Search", class: "btn btn-primary" %>
-      </div>
+
+  <div class="row flex-grow-1">
+    <div class="mb-3 d-flex justify-content-start">
+      <%= link_to teacher_dashboard_path(@teachers), class: 'btn btn-orange' do %>
+        <i class="bi bi-arrow-left"></i> Dashboard
+      <% end %>
     </div>
-  <% end %>
-  <!-- Students List -->
-  <% if @student.present? %>
-    <div class="card mb-4">
-      <div class="card-body">
-        <h5 class="card-title">Student Information</h5>
-        <p class="card-text">
-          <strong>NAME:</strong> <%= @student.StudentName %><br>
-          <strong>CLASS:</strong> <%= @student.StudentClass %><br>
-          <strong>Student ID:</strong> <%= @student.StudentID %>
-        </p>
-      </div>
-    </div>
-    <!-- Exam Report Grid Section -->
-    <div class="row">
-      <%= form_with(url: update_grades_teacher_path(@teachers), method: :patch, local: false, id: "grades-form") do %>
-        <% @subjects.each do |subject| %>
-          <div class="col-md-6 mb-4 d-flex">
-            <div class="card flex-grow-1">
-              <div class="card-body">
-                <h5 class="card-title"><%= subject.Name %></h5>
-                <% if subject.grades.any? %>
-                  <% subject.grades.each do |grade| %>
-                    <div class="d-flex align-items-center mb-2">
-                      <div class="input-group w-100">
-                        <%= hidden_field_tag "grades[#{grade.id}][id]", grade.id %>
-                        <%= text_field_tag "grades[#{grade.id}][Grade]", grade.Grade, class: "form-control" %>
-                      </div>
-                    </div>
-                  <% end %>
-                <% else %>
-                  <p class="text-muted">No grades available</p>
-                <% end %>
-                <!-- Add Student ID to Subject -->
-              </div>
-            </div>
-          </div>
-        <% end %>
-        <div class="col-12 text-center">
-          <%= submit_tag "Update All Grades", class: "btn btn-primary mt-4" %>
+    <!-- Header Section -->
+    <h1 class="mb-4 text-orange text-center">
+      Examination Report - <%= @teachers.TeacherName %>
+    </h1>
+
+    <!-- Search Form -->
+    <div class="search-form w-100 mb-4">
+      <%= form_with(url: teacher_exam_report_path(@teachers), method: :get, local: true, class: "form-wrapper") do %>
+        <div class="input-group">
+          <%= text_field_tag :query, params[:query], class: "form-control search-field", placeholder: "Enter student name..." %>
+          <button type="submit" class="btn btn-orange btn-search">
+            Search
+          </button>
         </div>
       <% end %>
     </div>
-  <% elsif params[:query].present? %>
-    <p class="text-muted">No students found</p>
-  <% end %>
-</div>
+
+    <!-- Student Information (If Present) -->
+    <% if @student.present? %>
+      <div class="student-info card shadow mb-4 flex-grow-1 rounded">
+        <div class="card-body">
+          <h5 class="card-title">Student Information</h5>
+          <p class="card-text">
+            <strong>Name:</strong> <%= @student.StudentName %><br>
+            <strong>Class:</strong> <%= @student.StudentClass %><br>
+            <strong>Student ID:</strong> <%= @student.StudentID %>
+          </p>
+        </div>
+      </div>
+
+      <!-- Exam Report Grid Section -->
+      <div class="row g-4">
+        <%= form_with(url: update_grades_teacher_path(@teachers), method: :patch, local: false, id: "grades-form") do %>
+          <% @subjects.each do |subject| %>
+            <div class="col-md-6">
+              <div class="card grade-card shadow-sm">
+                <div class="card-body">
+                  <h5 class="card-title text-orange"><%= subject.Name %></h5>
+                  <% if subject.grades.any? %>
+                    <% subject.grades.each do |grade| %>
+                      <div class="d-flex align-items-center mb-3">
+                        <%= hidden_field_tag "grades[#{grade.id}][id]", grade.id %>
+                        <div class="input-group w-100">
+                          <%= text_field_tag "grades[#{grade.id}][Grade]", grade.Grade, class: "form-control grade-input" %>
+                        </div>
+                      </div>
+                    <% end %>
+                  <% else %>
+                    <p class="text-muted">No grades available.</p>
+                  <% end %>
+                </div>
+              </div>
+            </div>
+          <% end %>
+
+          <!-- Update Grades Button -->
+          <div class="col-12 text-center">
+            <button type="submit" class="btn btn-orange btn-update mt-4">
+              Update All Grades
+            </button>
+          </div>
+        <% end %>
+      </div>
+    <% elsif params[:query].present? %>
+      <!-- No Students Found Message -->
+      <p class="text-muted text-center">No students found matching your search.</p>
+    <% end %>
+  </div>
+
 <style>
-  .container {
-    max-width: 1200px;
-  }
-  .card {
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    border: none;
-    transition: transform 0.2s;
-  }
-  .card:hover {
-    transform: translateY(-5px);
-  }
-  .card-header {
-    background-color: #f8f9fa;
-    border-bottom: 1px solid #eee.
-  }
-  .grade-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center.
-  }
+    /* General Overrides */
+    body {
+        font-family: 'Montserrat', sans-serif;
+        background-color: #f9fafb;
+        color: #333;
+    }
+
+    h1, h5 {
+        font-weight: bold;
+        color: #E57E0C; /* Orange color for accents */
+    }
+
+    .card {
+        border: none;
+        border-radius: 12px;
+        background-color: white;
+        transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .card-title {
+        font-weight: 600;
+        color: #333;
+    }
+
+    /* Orange Highlights */
+    .text-orange {
+        color: #E57E0C;
+    }
+
+    .btn-orange {
+        background-color: #E57E0C;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 8px;
+        font-weight: bold;
+        transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+
+    .btn-orange:hover {
+        background-color: #d4710b;
+        transform: translateY(-2px);
+    }
+
+    /* Grade Input Fields */
+    .grade-input {
+        border-radius: 6px;
+        border: 1px solid #ced4da;
+        padding: 8px;
+    }
+
+    /* Search Form Style */
+    .search-form {
+        max-width: 600px;
+        margin: 0 auto;
+    }
+
+    .search-field {
+        border: 1px solid #ced4da;
+        border-radius: 6px 0 0 6px;
+        padding: 10px;
+    }
+
+    .btn-search {
+        border-radius: 0 6px 6px 0;
+    }
+
+    /* Student Info */
+    .student-info {
+        border-left: 4px solid #E57E0C;
+        padding: 20px;
+    }
+
+    /* Responsive Grid Styles */
+    @media (max-width: 768px) {
+        .grade-card {
+            margin-bottom: 20px;
+        }
+    }
 </style>
 <script>
   document.addEventListener("DOMContentLoaded", function() {

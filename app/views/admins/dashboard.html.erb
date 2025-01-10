@@ -1,13 +1,122 @@
-<h1>Admin Dashboard</h1>
-<p>Welcome, <%= @admins.AdminName %>!</p>
-<div class="dashboard-content">
-  <!-- Add your dashboard content here -->
-  <p>This is the admin dashboard. You can add various admin functionalities here.</p>
-  <!-- Buttons for admin functionalities -->
-  <div class="admin-buttons">
-    <%= button_to 'Verify Merit-Demerit', verify_merit_demerit_admins_path, method: :get, class: "btn btn-primary mb-3" %>
-    <%= button_to 'Class Ranking', class_ranking_admins_path, method: :get, class: "btn btn-primary mb-3" %>
-    <%= button_to 'Verify Payment', verify_payment_admins_path, method: :get, class: "btn btn-primary mb-3" %>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard</title>
+  <style>
+      body {
+          font-family: 'Arial', sans-serif;
+          background-color: #f2f4f7;
+          margin: 0;
+          padding: 0;
+      }
+
+      h1 {
+          color: #FF921A;
+          font-weight: bold;
+      }
+
+      p {
+          color: #4A5568;
+          font-size: 16px;
+          margin: 0;
+          padding: 0;
+      }
+
+      .dashboard-container {
+          min-height: 100vh;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          padding: 20px;
+          background-color: #f2f4f7;
+      }
+
+      .dashboard-header {
+          text-align: center;
+          margin-bottom: 30px;
+      }
+
+      .dashboard-content {
+          width: 100%;
+          max-width: 800px;
+          margin: 0 auto;
+          padding: 20px;
+          background: white;
+          border-radius: 8px;
+          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      }
+
+      .admin-buttons {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+          gap: 16px;
+          margin-top: 20px;
+      }
+
+      button.btn {
+          display: inline-block;
+          width: 100%;
+          padding: 10px 20px;
+          font-size: 16px;
+          font-weight: bold;
+          border: none;
+          border-radius: 6px;
+          cursor: pointer;
+          transition: background-color 0.3s ease-in-out;
+          box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      }
+
+      button.btn-primary {
+          background-color: #FF921A;
+          color: white;
+      }
+
+      button.btn-primary:hover {
+          background-color: #e37609;
+      }
+
+      button.btn-danger {
+          background-color: #e63946;
+          color: white;
+      }
+
+      button.btn-danger:hover {
+          background-color: #d9303c;
+      }
+
+      .logout-btn-container {
+          text-align: center;
+          margin-top: 20px;
+      }
+  </style>
+</head>
+<body>
+<div class="dashboard-container">
+  <!-- Dashboard Header -->
+  <div class="dashboard-header">
+    <h1>Admin Dashboard</h1>
+    <p>Welcome, <%= @admins.AdminName %>!</p>
+  </div>
+
+  <!-- Dashboard Content -->
+  <div class="dashboard-content">
+    <p>This is the admin dashboard. You can add various admin functionalities here.</p>
+
+    <!-- Admin Functionalities Buttons -->
+    <div class="admin-buttons">
+      <%= button_to 'Verify Merit-Demerit', verify_merit_demerit_admins_path, method: :get, class: "btn btn-primary" %>
+      <%= button_to 'Class Ranking', class_ranking_admins_path, method: :get, class: "btn btn-primary" %>
+      <%= button_to 'Verify Payment', verify_payment_admins_path, method: :get, class: "btn btn-primary" %>
+    </div>
+  </div>
+
+  <!-- Logout Button -->
+  <div class="logout-btn-container">
+    <%= button_to 'Logout', admin_logout_path, method: :delete, class: "btn btn-danger" %>
   </div>
 </div>
-<%= button_to 'Logout', admin_logout_path, method: :delete, class: "btn btn-danger" %>
+</body>
+</html>

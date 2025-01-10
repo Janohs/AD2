@@ -1,77 +1,163 @@
-<!-- filepath: /d:/Ruby Project/app/views/teachers/dashboard.html.erb -->
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.3.3/css/bootstrap.min.css">
-    <title>Teacher Dashboard</title>
-    <%= stylesheet_link_tag 'application', media: 'all' %>
-    <style>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Teacher Dashboard</title>
+  <%= stylesheet_link_tag 'application', media: 'all' %>
+  <style>
+      /* General Styles */
       body {
-        position: relative;
+          font-family: 'Montserrat', sans-serif;
+          margin: 0;
+          background-color: #f5f5f5;
+          color: #333;
       }
+
+      h1, h2 {
+          color: #E57E0C;
+      }
+
+      /* Container for full-page dashboard */
+      .dashboard-container {
+          min-height: 100vh;
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+          padding: 30px 20px;
+      }
+
+      /* Header Area Styles */
+      .dashboard-header {
+          text-align: center;
+          margin-bottom: 40px;
+          position: relative;
+      }
+
+      .welcome-card {
+          background-color: white;
+          border-radius: 12px;
+          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+          padding: 20px;
+          text-align: center;
+          margin-bottom: 40px;
+      }
+
+      .welcome-header {
+          font-size: 24px;
+          font-weight: 600;
+          margin-bottom: 5px;
+      }
+
+      .school-name {
+          font-size: 18px;
+          font-weight: 400;
+          color: #6c757d;
+      }
+
+      .logout-button-container {
+          margin-bottom: 10px; /* Spacing between the logout button and footer text */
+      }
+
+      .logout-button {
+          background-color: #E57E0C;
+          color: white;
+          padding: 10px 16px;
+          border: none;
+          border-radius: 8px;
+          font-size: 14px;
+          font-weight: bold;
+          cursor: pointer;
+          box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.1);
+          transition: background-color 0.3s ease, transform 0.3s ease;
+      }
+
+      .logout-button:hover {
+          background-color: #d4710b;
+          transform: translateY(-2px);
+      }
+
+      /* Dashboard Button Cards */
+      .dashboard-content {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+          gap: 20px;
+      }
+
       .card-button {
-        background-color: #E57E0C;
-        height: 20vh;
-        border-radius: 15px;
-        width: 100%;
-        color: white;
-        text-decoration: none;
+          background-color: #E57E0C;
+          color: white;
+          text-decoration: none;
+          border-radius: 12px;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          gap: 10px;
+          height: 150px;
+          box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+          transition: all 0.3s ease;
       }
-      .card-button .icon {
-        font-size: 24px;
+
+      .card-button:hover {
+          background-color: #d4710b;
+          transform: translateY(-3px);
       }
-    </style>
-  </head>
-  <body>
-    <div class="container-fluid">
-      <div class="row">
-        <div class="col-12">
-          <div class="content" style="margin-left: 100px; padding-left: 0;">
-            <!-- Welcome Card -->
-            <div class="card2 mb-3" style="border-radius: 15px;">
-              <div class="card-body">
-                <div class="d-flex align-items-center mb-3">
-                  <div class="logo-placeholder rounded-circle bg-secondary" style="width: 50px; height: 50px; margin-right: 10px;"></div>
-                  <div class="ml-3">
-                    <div style="font-family: 'Montserrat', sans-serif; font-size: 20px;">Welcome, <%= @teachers.TeacherName %></div>
-                    <div style="font-family: 'Montserrat', sans-serif; font-size: 16px;">SL Sek Integrasi Al Alusi</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <!-- Main Buttons Grouped in the Middle -->
-            <div class="grouped-content">
-              <!-- Examination Button -->
-              <div class="card2 mb-3">
-                <div class="card-body d-flex align-items-center justify-content-center">
-                  <a href="<%= teacher_exam_report_path(@teachers) %>" class="card-button">
-                    <div class="text-center">
-                      <div class="icon">📚</div>
-                      <div>Examination</div>
-                    </div>
-                  </a>
-                </div>
-              </div>
-              <!-- Merit-Demerit Button -->
-              <div class="card2 mb-3">
-                <div class="card-body d-flex align-items-center justify-content-center">
-                  <a href="<%= teacher_merit_demerit_path(@teachers) %>" class="card-button">
-                    <div class="text-center">
-                      <div class="icon">📋</div>
-                      <div>Merit-Demerit</div>
-                    </div>
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+
+      .button-icon {
+          font-size: 40px;
+      }
+
+      .button-text {
+          font-size: 18px;
+          font-weight: bold;
+      }
+
+      /* Footer Styles */
+      .dashboard-footer {
+          text-align: center;
+          margin-top: 40px;
+          font-size: 14px;
+          color: #6c757d;
+          padding: 20px 0;
+          background-color: #f5f5f5;
+      }
+  </style>
+</head>
+<body>
+<div class="dashboard-container container-fluid">
+  <!-- Dashboard Header -->
+  <div class="dashboard-header">
+    <div class="welcome-card">
+      <div class="welcome-header">Welcome, <%= @teachers.TeacherName %>!</div>
+      <div class="school-name">SL Sek Integrasi Al Alusi</div>
     </div>
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.3/js/bootstrap.min.js"></script>
-  </body>
+
+
+  </div>
+
+  <!-- Main Action Buttons Section -->
+  <div class="dashboard-content">
+    <!-- Examination Button -->
+    <a href="<%= teacher_exam_report_path(@teachers) %>" class="card-button">
+      <div class="button-icon">📚</div>
+      <div class="button-text">Examination</div>
+    </a>
+    <!-- Merit-Demerit Button -->
+    <a href="<%= teacher_merit_demerit_path(@teachers) %>" class="card-button">
+      <div class="button-icon">📋</div>
+      <div class="button-text">Merit-Demerit</div>
+    </a>
+
+  </div>
+
+  <!-- Dashboard Footer -->
+  <footer class="dashboard-footer">
+    <!-- Logout Button -->
+    <div class="logout-button-container">
+      <%= button_to 'Logout', admin_logout_path, method: :delete, class: 'logout-button' %>
+    </div>
+  </footer>
+</div>
+</body>
 </html>

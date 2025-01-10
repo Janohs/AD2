@@ -1,24 +1,131 @@
-<h1>Verify Payment</h1>
-<p>Here you can verify payments.</p>
-<table class="table">
-  <thead>
-    <tr>
-      <th scope="col">Payment ID</th>
-      <th scope="col">Student ID</th>
-      <th scope="col">Amount</th>
-      <th scope="col">Date</th>
-      <th scope="col">Receipt</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @payments.each do |payment| %>
+
+  <!-- Header Section -->
+  <div class="text-center mb-4">
+    <h1 class="page-title">Verify Payment</h1>
+    <p class="text-muted">Here you can verify payments.</p>
+  </div>
+
+  <!-- Payment Table Section -->
+  <div class="table-responsive">
+    <table class="table table-striped table-hover align-middle">
+      <thead>
       <tr>
-        <td><%= payment.PaymentID %></td>
-        <td><%= payment.StudentID %></td>
-        <td>RM <%= payment.Amount %></td>
-        <td><%= payment.created_at.strftime("%Y-%m-%d") %></td>
-        <td><%= link_to 'View Receipt', payment.ReceiptURL, target: '_blank', class: 'btn btn-sm btn-primary' %></td>
+        <th scope="col">Payment ID</th>
+        <th scope="col">Student ID</th>
+        <th scope="col">Amount</th>
+        <th scope="col">Date</th>
+        <th scope="col">Receipt</th>
       </tr>
-    <% end %>
-  </tbody>
-</table>
+      </thead>
+      <tbody>
+      <% if @payments.any? %>
+        <% @payments.each do |payment| %>
+          <tr>
+            <td><%= payment.PaymentID %></td>
+            <td><%= payment.StudentID %></td>
+            <td>RM <%= sprintf("%.2f", payment.Amount) %></td>
+            <td><%= payment.created_at.strftime("%Y-%m-%d") %></td>
+            <td>
+              <%= link_to 'View Receipt', payment.ReceiptURL, target: '_blank', class: 'btn btn-sm btn-primary' %>
+            </td>
+          </tr>
+        <% end %>
+      <% else %>
+        <tr>
+          <td colspan="5" class="text-center text-muted">No payment records available.</td>
+        </tr>
+      <% end %>
+      </tbody>
+    </table>
+  </div>
+
+
+<style>
+    /* General Container Styles */
+    .payment-container {
+        max-width: 900px;
+        margin: 0 auto;
+        background-color: #ffffff;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        border-radius: 8px;
+        padding: 20px;
+    }
+
+    /* Header Section */
+    .page-title {
+        font-size: 2rem;
+        font-weight: bold;
+        background: linear-gradient(to right, #FF7A00, #FF921A);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        color: #FF921A; /* Fallback color */
+        margin-bottom: 10px;
+    }
+
+    p.text-muted {
+        color: #6c757d;
+        font-size: 1rem;
+    }
+
+    /* Table Section */
+    .table {
+        color: #343a40;
+    }
+
+    .table thead {
+        background-color: #FF921A;
+        color: #ffffff;
+        text-transform: uppercase;
+        font-size: 0.9rem;
+        text-align: center;
+    }
+
+    .table th,
+    .table td {
+        text-align: center;
+        vertical-align: middle;
+    }
+
+    .table th {
+        padding: 10px;
+        font-weight: bold;
+    }
+
+    .table-striped tbody tr:nth-of-type(odd) {
+        background-color: #fff6eb;
+    }
+
+    .table-hover tbody tr:hover {
+        background-color: #ffe8ce;
+    }
+
+    /* Button Styles */
+    .btn-primary,
+    .btn-primary:hover {
+        background-color: #FF921A;
+        border-color: #FF921A;
+        color: #ffffff;
+    }
+
+    .btn-sm {
+        font-size: 0.85rem;
+        padding: 5px 10px;
+        text-transform: uppercase;
+    }
+
+    /* Responsive Adjustments */
+    @media (max-width: 768px) {
+        .page-title {
+            font-size: 1.6rem;
+        }
+
+        p.text-muted {
+            font-size: 0.9rem;
+        }
+
+        .table th,
+        .table td {
+            font-size: 0.85rem;
+        }
+    }
+</style>

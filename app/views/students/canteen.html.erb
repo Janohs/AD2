@@ -7,14 +7,16 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
       body, html {
-        height: 100%;
+        min-height: 100vh;
         margin: 0;
         padding: 0;
         overflow: hidden;
       }
       .container-fluid {
-        height: 100vh;
+        height: auto;
+        min-height: 100vh;
         display: flex;
+        flex-wrap: wrap;
       }
 
       .overlay {
@@ -28,45 +30,53 @@
         background-color: rgba(0, 0, 0, 0.7);
         opacity: 0;
         visibility: hidden;
-        transition: all 0.3s ease;
+        transition: opacity 0.3s ease, visibility 0.3s ease;
         z-index: 1000;
       }
 
       .sidebar:hover + .overlay,
       .overlay:hover {
-        opacity: 1;
+        opacity: 0.9;
         visibility: visible;
       }
 
       .container-fluid {
         position: relative;
+        padding: 20px 15px;
         z-index: 1;
       }
       .outstanding-amount {
-        font-size: 2.5rem;
-        color: #ff6600;
+        font-size: 2rem;
+        color: #d35400;
         font-weight: bold;
       }
       .payment-instructions {
-        font-size: 1rem;
-        font-weight: bold;
+        font-size: 1.1rem;
+        font-weight: 600;
+        margin-bottom: 1rem;
+
+        font-weight: 600;
       }
       .qr-section {
         text-align: center;
         margin-top: 1rem;
       }
       .orange-btn {
-        background-color: #ff6600;
-        color: white;
+        background-color: #e67e22;
+        color: #fff;
+        font-size: 1rem;
+        padding: 10px 20px;
         font-weight: bold;
         border: none;
       }
       .modal-body {
         text-align: center;
+        padding: 20px;
+        font-size: 1rem;
       }
       .upload-icon {
-        font-size: 5rem;
-        color: #ff6600;
+        font-size: 4rem;
+        color: #e67e22;
       }
       .custom-btn {
         background-color: white;
@@ -74,8 +84,8 @@
         color: #FF8A08; /* Orange text */
       }
       .custom-btn:hover {
-        background-color: #FF8A08; /* Orange background on hover */
-        color: white; /* White text on hover */
+        background-color: #d35400;
+        color: #fff;
       }
     </style>
   </head>
@@ -85,10 +95,10 @@
       <!-- Sidebar -->
       <!-- app/views/dashboard/index.html.erb or wherever your sidebar is defined -->
       <div class="sidebar">
-        <a href="<%= student_dashboard_path(current_student) %>" class="item">
+        <a href="<%= student_dashboard_path(current_student) %>" class="item d-flex align-items-center py-2">
           <div class="icon">🏠</div>
           <div class="text">Dashboard</div>
-        </a>
+          <div class="text" style="font-size: 1rem;">Dashboard</div>
         <a href="<%= profile_student_path(current_student) %>" class="item">
           <div class="icon">🧑‍🎓</div>
           <div class="text">Student Profile</div>
@@ -138,9 +148,9 @@
           <%= link_to 'Fill Out Form', 'https://docs.google.com/forms/d/e/1FAIpQLSea9czP9spvDoedS7N44dev4spYTJe0qW0_EyztdvdSfCzaow/viewform?usp=header', target: '_blank', class: 'btn btn-primary', style: 'background-color: #E57E0C; color: white;' %>
           <!-- Add Payment History Section -->
           <h5 class="mt-4">Payment History</h5>
-          <div class="table-responsive" style="max-height: 400px; overflow-y: auto;">
+          <div class="table-responsive" style="max-height: 400px; overflow-y: auto; border: 1px solid #ddd; border-radius: 5px;">
             <table class="table">
-              <thead style="background-color: #E57E0C; color: white;">
+              <thead style="background-color: #e67e22; color: #fff; font-size: 1rem;">
                 <tr>
                   <th scope="col">Payment ID</th>
                   <th scope="col">Date</th>
@@ -148,7 +158,7 @@
                   <th scope="col">Receipt</th>
                 </tr>
               </thead>
-              <tbody>
+              <tbody style="font-size: 0.95rem;">
                 <% if @payments.present? %>
                   <% @payments.each do |payment| %>
                     <tr>
@@ -168,9 +178,9 @@
           </div>
         </div>
         <!-- QR Code Section -->
-        <div class="col-4 qr-section" style="padding-right:50px; padding-top: 50px">
+        <div class="col-lg-5 col-md-6 col-sm-12 qr-section" style="padding: 20px;">
           <div class="card p-3">
-            <h5><img src="https://via.placeholder.com/30x30" alt="Maybank Logo"> Maybank</h5>
+            <h5><img src="https://via.placeholder.com/30x30" alt="Maybank Logo" class="me-2"> Maybank</h5>
             <p>Nureen bin Ukasyah</p>
             <img src="https://via.placeholder.com/150x150" alt="QR Code" class="img-fluid">
             <p class="mt-2">Al-Alusi SIRAJ QR</p>
