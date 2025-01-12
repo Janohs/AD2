@@ -20,7 +20,23 @@
           background-position: center;
           background-repeat: no-repeat;
       }
-      .card {
+add text after this line
+      .button {
+          background-color: #FF921A;
+          color: white;
+          padding: 10px 20px;
+          border-radius: 5px;
+          border: none;
+          cursor: pointer;
+          text-decoration: none;
+          font-size: 16px;
+          transition: all 0.3s ease;
+      }
+      .button:hover {
+          background-color: white;
+          color: #FF921A;
+          border: 2px solid #FF921A;
+      }
           background-color: rgba(255, 255, 255, 0.8); /* Slightly transparent background */
           border-radius: 8px;
       }
@@ -37,9 +53,9 @@
           </div>
           <h1 class="text-center mb-4">Welcome</h1>
           <!-- filepath: /d:/Ruby Project/app/views/pages/welcome.html.erb -->
-          <%= link_to 'Teacher', teacher_login_path, class: 'button' %> <!-- Link to teacher login -->
-          <%= link_to 'Parent', login_path, class: 'button' %>  <!-- Link to login -->
-          <%= link_to 'Admin', admins_index_path, class: 'button' %> <!-- Link to admin index -->
+          <%= link_to 'Teacher', teacher_login_path, class: 'button' %>
+          <%= link_to 'Parent', login_path, class: 'button' %>
+          <%= link_to 'Admin', admins_index_path, class: 'button' %>
         </div>
       </div>
     </div>
