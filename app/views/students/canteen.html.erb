@@ -1,172 +1,236 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Full-Width Payment Page</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-    <style>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Full-Width Payment Page</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
       body, html {
-        min-height: 100vh;
-        margin: 0;
-        padding: 0;
-        overflow: hidden;
-      }
-      .container-fluid {
-        height: auto;
-        min-height: 100vh;
-        display: flex;
-        flex-wrap: wrap;
+          min-height: 100vh;
+          margin: 0;
+          padding: 0;
+          overflow-x: hidden;
+          background-color: #f8f9fa;
       }
 
+      /* Preserving original sidebar-related styles */
       .overlay {
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        width: 100vw;
-        height: 100vh;
-        background-color: rgba(0, 0, 0, 0.7);
-        opacity: 0;
-        visibility: hidden;
-        transition: opacity 0.3s ease, visibility 0.3s ease;
-        z-index: 1000;
+          position: fixed;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          width: 100vw;
+          height: 100vh;
+          background-color: rgba(0, 0, 0, 0.7);
+          opacity: 0;
+          visibility: hidden;
+          transition: opacity 0.3s ease, visibility 0.3s ease;
+          z-index: 1000;
       }
 
       .sidebar:hover + .overlay,
       .overlay:hover {
-        opacity: 0.9;
-        visibility: visible;
+          opacity: 0.9;
+          visibility: visible;
       }
 
-      .container-fluid {
-        position: relative;
-        padding: 20px 15px;
-        z-index: 1;
+      /* Enhanced styles */
+      .main-content {
+          padding: 2rem;
+          margin-left: 200px;
       }
-      .outstanding-amount {
-        font-size: 2rem;
-        color: #d35400;
-        font-weight: bold;
-      }
-      .payment-instructions {
-        font-size: 1.1rem;
-        font-weight: 600;
-        margin-bottom: 1rem;
 
-        font-weight: 600;
+      .page-title {
+          color: #e67e22;
+          font-weight: 700;
+          font-size: 1.5rem;
+          margin-bottom: 2rem;
+          padding-bottom: 0.5rem;
+          border-bottom: 2px solid #e67e22;
       }
+
+      .payment-card {
+          background: white;
+          border-radius: 12px;
+          box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+          padding: 2rem;
+          margin-bottom: 2rem;
+      }
+
       .qr-section {
-        text-align: center;
-        margin-top: 1rem;
+          background: white;
+          border-radius: 12px;
+          box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+          padding: 2rem;
+          text-align: center;
       }
-      .orange-btn {
-        background-color: #e67e22;
-        color: #fff;
-        font-size: 1rem;
-        padding: 10px 20px;
-        font-weight: bold;
-        border: none;
+
+      .payment-instructions {
+          background-color: #fff3e0;
+          border-left: 4px solid #e67e22;
+          padding: 1.5rem;
+          border-radius: 0 8px 8px 0;
+          margin-bottom: 2rem;
       }
-      .modal-body {
-        text-align: center;
-        padding: 20px;
-        font-size: 1rem;
+
+      .payment-instructions ol {
+          margin-bottom: 0;
+          padding-left: 1.2rem;
       }
-      .upload-icon {
-        font-size: 4rem;
-        color: #e67e22;
+
+      .payment-instructions li {
+          margin-bottom: 0.5rem;
+          line-height: 1.6;
       }
-      .custom-btn {
-        background-color: white;
-        border: 2px solid #FF8A08; /* Use the same orange hash as used */
-        color: #FF8A08; /* Orange text */
+
+      .payment-history {
+          background: white;
+          border-radius: 12px;
+          box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+          padding: 1.5rem;
+          margin-top: 2rem;
       }
-      .custom-btn:hover {
-        background-color: #d35400;
-        color: #fff;
+
+      .table thead th {
+          background-color: #e67e22;
+          color: white;
+          font-weight: 600;
+          border: none;
+          padding: 1rem;
       }
-    </style>
-  </head>
-  <body>
-    <div class="overlay"></div>
-    <div class="container-fluid">
-      <!-- Sidebar -->
-      <!-- app/views/dashboard/index.html.erb or wherever your sidebar is defined -->
-      <div class="sidebar">
-        <a href="<%= student_dashboard_path(current_student) %>" class="item d-flex align-items-center py-2">
-          <div class="icon">🏠</div>
-          <div class="text">Dashboard</div>
-          <div class="text" style="font-size: 1rem;">Dashboard</div>
-        <a href="<%= profile_student_path(current_student) %>" class="item">
-          <div class="icon">🧑‍🎓</div>
-          <div class="text">Student Profile</div>
-        </a>
-        <a href="<%= merit_student_path(@student) %>" class="item">
-          <div class="icon">😁</div>
-          <div class="text">Merit-Dimerit</div>
-        </a>
-        <a href="<%= exam_student_path(current_student) %>" class="item">
-          <div class="icon">📚</div>
-          <div class="text">Exam Report</div>
-        </a>
-        <a href="<%= student_canteen_path(current_student) %>" class="item">
-          <div class="icon">🥘</div>
-          <div class="text">Canteen Fees</div>
-        </a>
-        <!-- Logout button at bottom -->
-        <%= button_to logout_path, method: :delete, class: "logout-btn", style: "margin-top: auto;" do %>
-          <div class="icon">🚪</div>
-          <div class="text">Logout</div>
-        <% end %>
-      </div>
-      <!-- Main Content -->
-      <div class="row flex-grow-1">
-        <div class="col-11" style="padding-left: 275px; padding-top: 50px">
-          <button class="btn orange-btn mb-3">Pay Canteen Fees</button>
-          <h5>Outstanding Amount</h5>
-          <div class="outstanding-amount">RM 500.00</div>
-          <h5 class="payment-instructions mt-3">Payment Instruction</h5>
-          <ol>
-            <li>Scan the QR code shown on the left using any banking transaction application (e.g., MAE, CIMB Clicks).</li>
-            <li>Ensure the sender account is <strong>Mr. Nuriman Alysha</strong>.</li>
-            <li>Proceed with the payment.</li>
-            <li>Enter the amount paid into the portal below.</li>
-          </ol>
-          <!-- Form to enter the amount -->
-          <div style="display:none;">
-            <%= form_with(url: add_payment_student_path(@student), method: :post, local: true) do |form| %>
-              <div class="form-group">
-                <%= form.label :amount, "Amount (RM)" %>
-                <%= form.text_field :amount, class: 'form-control', placeholder: 'Enter amount in RM' %>
-              </div>
-              <%= form.submit "Submit Payment", class: 'btn btn-primary mt-3' %>
-            <% end %>
+
+      .table tbody td {
+          padding: 1rem;
+          vertical-align: middle;
+      }
+
+      .btn-primary {
+          background-color: #e67e22;
+          border-color: #e67e22;
+          padding: 0.75rem 1.5rem;
+          font-weight: 600;
+          border-radius: 8px;
+          transition: all 0.3s ease;
+      }
+
+      .btn-primary:hover {
+          background-color: #d35400;
+          border-color: #d35400;
+          transform: translateY(-2px);
+      }
+
+      .badge {
+          padding: 0.5rem 1rem;
+          font-weight: 500;
+      }
+
+      .qr-title {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 0.5rem;
+          margin-bottom: 1rem;
+      }
+
+      .qr-code-image {
+          width: 200px;
+          height: 200px;
+          margin: 1.5rem auto;
+          border: 2px solid #e67e22;
+          padding: 0.5rem;
+          border-radius: 12px;
+      }
+
+      .bank-info {
+          background-color: #f8f9fa;
+          padding: 1rem;
+          border-radius: 8px;
+          margin-top: 1rem;
+      }
+  </style>
+</head>
+<body>
+<div class="overlay"></div>
+<div class="container-fluid">
+  <!-- Preserving original sidebar -->
+  <div class="sidebar">
+    <!-- Original sidebar content preserved -->
+    <a href="<%= student_dashboard_path(current_student) %>" class="item">
+      <div class="icon">🏠</div>
+      <div class="text">Dashboard</div>
+    </a>
+    <a href="<%= profile_student_path(current_student) %>" class="item">
+      <div class="icon">🧑‍🎓</div>
+      <div class="text">Student Profile</div>
+    </a>
+    <a href="<%= merit_student_path(current_student) %>" class="item">
+      <div class="icon">😁</div>
+      <div class="text">Merit-Demerit</div>
+    </a>
+    <a href="<%= exam_student_path(current_student) %>" class="item">
+      <div class="icon">📚</div>
+      <div class="text">Exam Report</div>
+    </a>
+    <a href="<%= student_canteen_path(current_student) %>" class="item">
+      <div class="icon">🥘</div>
+      <div class="text">Canteen Fees</div>
+    </a>
+    <!-- Logout button at bottom -->
+    <%= button_to logout_path, method: :delete, class: "logout-btn", style: "margin-top: auto;" do %>
+      <div class="icon">🚪</div>
+      <div class="text">Logout</div>
+    <% end %>
+  </div>
+
+  <!-- Enhanced Main Content -->
+  <div class="main-content">
+    <h1 class="page-title">Pay Canteen Fees</h1>
+
+    <div class="row">
+      <div class="col-md-8">
+        <div class="payment-card">
+          <div class="payment-instructions">
+            <h5 class="mb-3">Payment Instructions</h5>
+            <ol>
+              <li>Scan the QR code using any banking transaction application (e.g., MAE, CIMB Clicks)</li>
+              <li>Ensure the sender account is <strong>Mr. Nuriman Alysha</strong></li>
+              <li>Proceed with the payment</li>
+              <li>Enter the amount paid into the portal below</li>
+            </ol>
           </div>
-          <!-- Button to trigger the form -->
-          <%= link_to 'Fill Out Form', 'https://docs.google.com/forms/d/e/1FAIpQLSea9czP9spvDoedS7N44dev4spYTJe0qW0_EyztdvdSfCzaow/viewform?usp=header', target: '_blank', class: 'btn btn-primary', style: 'background-color: #E57E0C; color: white;' %>
-          <!-- Add Payment History Section -->
-          <h5 class="mt-4">Payment History</h5>
-          <div class="table-responsive" style="max-height: 400px; overflow-y: auto; border: 1px solid #ddd; border-radius: 5px;">
-            <table class="table">
-              <thead style="background-color: #e67e22; color: #fff; font-size: 1rem;">
+
+          <div class="text-center mb-4">
+            <%= link_to 'Fill Out Payment Form', 'https://docs.google.com/forms/d/e/1FAIpQLSea9czP9spvDoedS7N44dev4spYTJe0qW0_EyztdvdSfCzaow/viewform?usp=header',
+                        target: '_blank',
+                        class: 'btn btn-primary btn-lg shadow-sm' %>
+          </div>
+        </div>
+
+        <div class="payment-history">
+          <h5 class="mb-4">Payment History</h5>
+          <div class="table-responsive">
+            <table class="table  table-hover">
+              <thead style="background-color: #e67e22; color: white; text-align: center;">
               <tr>
-                <th scope="col">Payment ID</th>
-                <th scope="col">Date</th>
-                <th scope="col">Amount</th>
-                <th scope="col">Receipt</th>
-                <th scope="col">Verified Status</th> <!-- New column -->
+                <th>Payment ID</th>
+                <th>Date</th>
+                <th>Amount (RM)</th>
+                <th>Receipt</th>
+                <th>Status</th>
               </tr>
               </thead>
-              <tbody style="font-size: 0.95rem;">
+              <tbody style="text-align: center;">
               <% if @payments.present? %>
                 <% @payments.each do |payment| %>
                   <tr>
                     <td><%= payment["PaymentID"] %></td>
                     <td><%= payment["created_at"].strftime("%Y-%m-%d") %></td>
-                    <td>RM <%= sprintf("%.2f", payment["Amount"]) %></td>
-                    <td><%= link_to 'View Receipt', payment["ReceiptURL"], target: '_blank', class: 'btn btn-sm', style: 'background-color: #E57E0C; color: white;' %></td>
+                    <td><%= sprintf("%.2f", payment["Amount"]) %></td>
+                    <td>
+                      <%= link_to 'Receipt', payment["ReceiptURL"], target: '_blank', class: 'btn btn-sm btn-primary' %>
+                    </td>
                     <td>
                       <% if payment["status"] %>
                         <span class="badge bg-success">Verified</span>
@@ -178,31 +242,35 @@
                 <% end %>
               <% else %>
                 <tr>
-                  <td colspan="5" class="text-center text-muted">No payments found.</td>
+                  <td colspan="5" class="text-muted py-4">No payments found</td>
                 </tr>
               <% end %>
               </tbody>
             </table>
           </div>
         </div>
-        <!-- QR Code Section -->
-        <div class="col-lg-5 col-md-6 col-sm-12 qr-section" style="padding: 20px;">
-          <div class="card p-3">
-            <h5><img src="https://via.placeholder.com/30x30" alt="Maybank Logo" class="me-2"> Maybank</h5>
-            <p>Nureen bin Ukasyah</p>
-            <img src="https://via.placeholder.com/150x150" alt="QR Code" class="img-fluid">
-            <p class="mt-2">Al-Alusi SIRAJ QR</p>
+      </div>
+
+      <div class="col-md-4">
+        <div class="qr-section">
+          <div class="qr-title">
+            <img src="https://via.placeholder.com/30x30" alt="Maybank Logo" class="me-2">
+            <h5 class="mb-0">Maybank</h5>
           </div>
+          <div class="bank-info">
+            <p class="fw-bold mb-2">Nureen bin Ukasyah</p>
+            <p class="text-muted mb-0">Account Holder</p>
+          </div>
+          <img src="https://via.placeholder.com/150?text=QR+Code"
+               alt="QR Code"
+               class="qr-code-image">
+          <p class="text-muted">Al-Alusi SIRAJ QR</p>
         </div>
       </div>
-      <!-- Upload Modal -->
-      <div class="modal fade" id="uploadModal" tabindex="-1" aria-labelledby="uploadModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-          <div class="modal-content">
-            <!-- Modal content here -->
-          </div>
-        </div>
-      </div>
-      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-    </body>
-  </html>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
