@@ -48,8 +48,8 @@ add text after this line
       <div class="container vh-100 d-flex align-items-center justify-content-end">
         <div class="card p-4 d-flex flex-column align-items-center" style="max-width: 400px; width: 100%;">
           <!-- Logo Placeholder -->
-          <div class="logo-placeholder rounded-circle bg-light d-flex align-items-center justify-content-center" style="width: 80px; height: 80px;">
-            <span class="text-muted">Logo</span>
+          <div class="logo-placeholder">
+            <%= image_tag asset_path('img.png'), alt: 'Logo', class: 'rounded-circle bg-light', style: 'width: 150px; height: 150px; object-fit: cover;' %>
           </div>
           <h1 class="text-center mb-4">Welcome</h1>
           <!-- filepath: /d:/Ruby Project/app/views/pages/welcome.html.erb -->

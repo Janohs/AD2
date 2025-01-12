@@ -1,7 +1,7 @@
 <!-- filepath: /d:/Ruby Project/app/views/teachers/exam_report.html.erb -->
 
   <div class="row flex-grow-1">
-    <div class="mb-3 d-flex justify-content-start">
+    <div class="mb-3 d-flex justify-content-start" style="margin-top: 20px;">
       <%= link_to teacher_dashboard_path(@teachers), class: 'btn btn-orange' do %>
         <i class="bi bi-arrow-left"></i> Dashboard
       <% end %>
@@ -112,6 +112,9 @@
 
     .btn-orange {
         background-color: #E57E0C;
+        position: absolute;
+
+        margin-left: 20px;
         color: white;
         border: none;
         padding: 10px 20px;
@@ -121,8 +124,10 @@
     }
 
     .btn-orange:hover {
-        background-color: #d4710b;
-        transform: translateY(-2px);
+        background-color: #fff;
+        color: #E57E0C;
+        border: 2px solid #E57E0C;
+
     }
 
     /* Grade Input Fields */
