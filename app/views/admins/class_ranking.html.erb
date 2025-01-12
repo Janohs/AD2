@@ -1,5 +1,7 @@
-
-  <!-- Header Section -->
+<div class="dashboard-button-container">
+  <%= link_to 'Back to Admin Dashboard', admin_dashboard_path(session[:admin_id]), class: 'btn btn-primary', style: "background-color: #FF8A08; border-color: #FF8A08; position: absolute; top: 10px; left: 10px; z-index: 1000;" %>
+</div>
+<!-- Header Section -->
   <div class="text-center mb-4">
     <h1 class="page-title">Class Ranking</h1>
     <p class="text-muted">Here you can view and manage class rankings.</p>
