@@ -10,6 +10,9 @@ class AdminsController < ApplicationController
   def dashboard
     @admins = Admin.find(params[:id])
     # Add any additional logic needed for the admin's dashboard
+    @student_count=Student.count
+    @unique_classes_count= Student.select(:StudentClass).distinct.count
+    @unverified_merits_count= Merit.where(status:false).count
   end
 
   def verify_merit_demerit
