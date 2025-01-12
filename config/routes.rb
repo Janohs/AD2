@@ -38,6 +38,7 @@ Rails.application.routes.draw do
     end
     member do
       patch "accept_merit"
+      patch "verify_payment_action", to: "admins#verify_payment_action", as: "verify_payment"
     end
   end
   # devise_for :users
