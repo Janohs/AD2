@@ -151,28 +151,36 @@
           <div class="table-responsive" style="max-height: 400px; overflow-y: auto; border: 1px solid #ddd; border-radius: 5px;">
             <table class="table">
               <thead style="background-color: #e67e22; color: #fff; font-size: 1rem;">
-                <tr>
-                  <th scope="col">Payment ID</th>
-                  <th scope="col">Date</th>
-                  <th scope="col">Amount</th>
-                  <th scope="col">Receipt</th>
-                </tr>
+              <tr>
+                <th scope="col">Payment ID</th>
+                <th scope="col">Date</th>
+                <th scope="col">Amount</th>
+                <th scope="col">Receipt</th>
+                <th scope="col">Verified Status</th> <!-- New column -->
+              </tr>
               </thead>
               <tbody style="font-size: 0.95rem;">
-                <% if @payments.present? %>
-                  <% @payments.each do |payment| %>
-                    <tr>
-                      <td><%= payment["PaymentID"] %></td>
-                      <td><%= payment["Date"] %></td>
-                      <td>RM <%= payment["Amount"] %></td>
-                      <td><%= link_to 'View Receipt', payment["ReceiptURL"], target: '_blank', class: 'btn btn-sm', style: 'background-color: #E57E0C; color: white;' %></td>
-                    </tr>
-                  <% end %>
-                <% else %>
+              <% if @payments.present? %>
+                <% @payments.each do |payment| %>
                   <tr>
-                    <td colspan="4">No payments found.</td>
+                    <td><%= payment["PaymentID"] %></td>
+                    <td><%= payment["created_at"].strftime("%Y-%m-%d") %></td>
+                    <td>RM <%= sprintf("%.2f", payment["Amount"]) %></td>
+                    <td><%= link_to 'View Receipt', payment["ReceiptURL"], target: '_blank', class: 'btn btn-sm', style: 'background-color: #E57E0C; color: white;' %></td>
+                    <td>
+                      <% if payment["status"] %>
+                        <span class="badge bg-success">Verified</span>
+                      <% else %>
+                        <span class="badge bg-danger">Not Verified</span>
+                      <% end %>
+                    </td>
                   </tr>
                 <% end %>
+              <% else %>
+                <tr>
+                  <td colspan="5" class="text-center text-muted">No payments found.</td>
+                </tr>
+              <% end %>
               </tbody>
             </table>
           </div>

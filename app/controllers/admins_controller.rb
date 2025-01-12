@@ -35,4 +35,13 @@ class AdminsController < ApplicationController
   def verify_payment
     @payments = Payment.all # Fetch all payments
   end
+
+  def verify_payment_action
+    @payment = Payment.find(params[:id])
+    if @payment.update(status: true)
+      redirect_to verify_payment_admins_path, notice: "Payment ##{@payment.PaymentID} has been successfully verified."
+    else
+      redirect_to verify_payment_admins_path, alert: "Failed to verify payment ##{@payment.PaymentID}. Please try again."
+    end
+  end
 end
