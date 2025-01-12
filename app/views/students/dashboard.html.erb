@@ -1,136 +1,158 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.3.3/css/bootstrap.min.css">
-    <title>Home</title>
-    <%= stylesheet_link_tag 'application', media: 'all' %>
-    <style>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.3.3/css/bootstrap.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+  <title>Home</title>
+  <%= stylesheet_link_tag 'application', media: 'all' %>
+  <style>
       body {
-        position: relative;
+          font-family: 'Poppins', sans-serif;
+          background-color: #f8f9fa;
+          position: relative;
       }
-    </style>
-  </head>
-  <body>
-    <div class="overlay"></div>
-    <div class="container-fluid">
-      <div class="row">
-        <div class="col-1 bordered">
-          <div class="sidebar">
-            <a href="<%= student_dashboard_path(current_student) %>" class="item">
-              <div class="icon">🏠</div>
-              <div class="text">Dashboard</div>
-            </a>
-            <a href="<%= profile_student_path(current_student) %>" class="item">
-              <div class="icon">🧑‍🎓</div>
-              <div class="text">Student Profile</div>
-            </a>
-            <a href="<%= merit_student_path(current_student) %>" class="item">
-              <div class="icon">😁</div>
-              <div class="text">Merit-Demerit</div>
-            </a>
-            <a href="<%= exam_student_path(current_student) %>" class="item">
-              <div class="icon">📚</div>
-              <div class="text">Exam Report</div>
-            </a>
-            <a href="<%= student_canteen_path(current_student) %>" class="item">
-              <div class="icon">🥘</div>
-              <div class="text">Canteen Fees</div>
-            </a>
-            <!-- Logout button at bottom -->
-            <%= button_to logout_path, method: :delete, class: "logout-btn", style: "margin-top: auto;" do %>
-              <div class="icon">🚪</div>
-              <div class="text">Logout</div>
-            <% end %>
-          </div>
-        </div>
-        <div class="col-7 bordered">
-          <div class="content" style="margin-left: 100px; padding-left: 0;">
-            <!-- Welcome Card -->
-            <div class="card2 mb-3" style="border-radius: 15px;">
-              <div class="card-body">
-                <div class="d-flex align-items-center mb-3">
-                  <div class="logo-placeholder rounded-circle bg-secondary" style="width: 50px; height: 50px; margin-right: 10px;"></div>
-                  <div class="ml-3">
-                    <div style="font-family: 'Montserrat', sans-serif; font-size: 20px;">Welcome, <%= @student.StudentName %></div>
-                    <div style="font-family: 'Montserrat', sans-serif; font-size: 16px;">SL Sek Integrasi Al Alusi</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <!-- Main Buttons Grouped in the Middle -->
-            <div class="grouped-content">
-              <!-- Student Information Button -->
-              <div class="card2 mb-3" style="background-color: #E57E0C; height: 20vh; border-radius: 15px; width: 100%;">
-                <div class="card-body d-flex align-items-center justify-content-center">
-                  <a href="<%= profile_student_path(current_student) %>" style="text-decoration: none; color: white;">
-                    <div class="text-center">
-                      <div class="icon" style="font-size: 24px;">🎓</div>
-                      <div>Student Information</div>
-                    </div>
-                  </a>
-                </div>
-              </div>
-              <!-- Student Merits Point Button -->
-              <div class="card2 mb-3" style="background-color: #E57E0C; height: 20vh; border-radius: 15px; width: 100%;">
-                <div class="card-body d-flex align-items-center justify-content-center">
-                  <a href="<%= merit_student_path(@student) %>" style="text-decoration: none; color: white;">
-                    <div class="text-center">
-                      <div class="icon" style="font-size: 24px;">📋</div>
-                      <div>Student Merits Point</div>
-                      <div style="font-size: 12px;">Check All Student Merits or Demerits Points List</div>
-                    </div>
-                  </a>
-                </div>
-              </div>
-              <!-- Review Student Exam Report Button -->
-              <div class="card2 mb-3" style="background-color: #E57E0C; height: 20vh; border-radius: 15px; width: 100%;">
-                <div class="card-body d-flex align-items-center justify-content-center">
-                  <a href="<%= exam_student_path(current_student) %>"  style="text-decoration: none; color: white;">
-                    <div class="text-center">
-                      <div class="icon" style="font-size: 24px;">📚</div>
-                      <div>Review Student Exam Report</div>
-                    </div>
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col-3 bordered" style="padding-top: 165px">
-          <div class="row mt-1 gx-0" style="margin-top: 10px;">
-            <div class="col-12 mb-3">
-              <div class="card3 h-100" style="background-color: #FFFFFF; border-radius: 15px;">
-                <div class="card-body d-flex align-items-center justify-content-center">
-                  <a href="<%= profile_student_path(current_student) %>" style="text-decoration: none; color: inherit;">
-                    <div class="text-center">
-                      <div class="icon" style="font-size: 24px;">🧑‍🎓</div>
-                      <div>Student Profile</div>
-                    </div>
-                  </a>
-                </div>
-              </div>
-            </div>
-            <div class="col-12 mb-3">
-              <div class="card3 h-100" style="background-color: #FFFFFF; border-radius: 15px;">
-                <div class="card-body d-flex align-items-center justify-content-center">
-                  <a href="<%= student_canteen_path(current_student) %>" style="text-decoration: none; color: inherit;">
-                    <div class="text-center">
-                      <div class="icon" style="font-size: 24px;">💰</div>
-                      <div>Review Student<br>
-                        Canteen Fees</div>
-                    </div>
-                  </a>
-                </div>
-              </div>
+
+      /* Main content styles */
+      .welcome-card {
+          background: linear-gradient(135deg, #2c3e50, #3498db);
+          color: white;
+          padding: 20px;
+          margin-bottom: 30px;
+          border-radius: 15px;
+          margin-top: 30px; /* Added margin-top to lower the banner */
+      }
+
+      .content-box {
+          background: white;
+          border-radius: 15px;
+          box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+          padding: 25px;
+          margin-top: 20px;
+      }
+
+      .menu-item {
+          padding: 20px;
+          border-radius: 10px;
+          transition: all 0.3s ease;
+          display: flex;
+          align-items: center;
+          text-decoration: none;
+          color: #2c3e50;
+          border: 1px solid #eee;
+          margin-bottom: 15px;
+      }
+
+      .menu-item:hover {
+          transform: translateX(10px);
+          background-color: #f8f9fa;
+          border-left: 4px solid #E57E0C;
+      }
+
+      .menu-item .icon {
+          font-size: 24px;
+          margin-right: 15px;
+          width: 40px;
+          height: 40px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          background-color: #f8f9fa;
+          border-radius: 8px;
+      }
+
+      .menu-item .text {
+          flex-grow: 1;
+      }
+
+      .menu-item .description {
+          font-size: 0.85em;
+          color: #666;
+          margin-top: 5px;
+      }
+
+      .content {
+          margin-left: 100px;
+          padding-left: 0;
+          padding-top: 20px; /* Added padding-top to push content down */
+      }
+  </style>
+</head>
+<body>
+<!-- Rest of the code remains the same -->
+<div class="overlay"></div>
+<div class="container-fluid">
+  <div class="row">
+    <!-- Original Sidebar Exactly as Provided -->
+    <div class="col-1 bordered">
+      <%= render 'shared/sidebar' %>
+    </div>
+
+    <!-- Enhanced Main Content Area -->
+    <div class="col-7 bordered">
+      <div class="content" style="margin-left: 100px; padding-left: 0;">
+        <!-- Welcome Card with adjusted positioning -->
+        <div class="welcome-card">
+          <div class="d-flex align-items-center">
+            <div class="logo-placeholder rounded-circle bg-secondary" style="width: 60px; height: 60px; margin-right: 20px;"></div>
+            <div>
+              <h2 class="mb-0" style="font-weight: 600;">Welcome, <%= @student.StudentName %></h2>
+              <p class="mb-0">SL Sek Integrasi Al Alusi</p>
             </div>
           </div>
         </div>
+
+        <!-- All Menu Items in One White Box -->
+        <div class="content-box">
+          <h3 class="mb-4">Dashboard</h3>
+
+          <a href="<%= profile_student_path(current_student) %>" class="menu-item">
+            <div class="icon">🎓</div>
+            <div class="text">
+              <div class="title">Student Information</div>
+              <div class="description">View and manage your personal information</div>
+            </div>
+          </a>
+
+          <a href="<%= merit_student_path(@student) %>" class="menu-item">
+            <div class="icon">📋</div>
+            <div class="text">
+              <div class="title">Student Merit Points</div>
+              <div class="description">Check your merit and demerit points history</div>
+            </div>
+          </a>
+
+          <a href="<%= exam_student_path(current_student) %>" class="menu-item">
+            <div class="icon">📚</div>
+            <div class="text">
+              <div class="title">Review Student Exam Report</div>
+              <div class="description">Access your academic performance and results</div>
+            </div>
+          </a>
+
+          <a href="<%= student_canteen_path(current_student) %>" class="menu-item">
+            <div class="icon">💰</div>
+            <div class="text">
+              <div class="title">Review Student Canteen Fees</div>
+              <div class="description">Check your canteen balance and transaction history</div>
+            </div>
+          </a>
+
+
+        </div>
+        </a>
       </div>
     </div>
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.3/js/bootstrap.min.js"></script>
-  </body>
+  </div>
+
+  <div class="col-4">
+  </div>
+</div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.3/js/bootstrap.min.js"></script>
+</body>
 </html>
