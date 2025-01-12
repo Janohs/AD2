@@ -104,32 +104,7 @@
     </style>
   </head>
   <body>
-    <div class="sidebar">
-      <a href="<%= student_dashboard_path(current_student) %>" class="item">
-        <div class="icon">🏠</div>
-        <div class="text">Dashboard</div>
-      </a>
-      <a href="<%= profile_student_path(current_student) %>" class="item">
-        <div class="icon">🧑‍🎓</div>
-        <div class="text">Student Profile</div>
-      </a>
-      <a href="<%= merit_student_path(current_student) %>" class="item">
-        <div class="icon">😁</div>
-        <div class="text">Merit-Demerit</div>
-      </a>
-      <a href="<%= exam_student_path(current_student) %>" class="item">
-        <div class="icon">📚</div>
-        <div class="text">Exam Report</div>
-      </a>
-      <a href="<%= student_canteen_path(current_student) %>" class="item">
-        <div class="icon">🥘</div>
-        <div class="text">Canteen Fees</div>
-      </a>
-      <%= button_to logout_path, method: :delete, class: "logout-btn" do %>
-        <div class="icon">🚪</div>
-        <div class="text">Logout</div>
-      <% end %>
-    </div>
+  <%= render 'shared/sidebar' %>
     <div class="container">
       <!-- Header Section -->
       <div class="row flex-grow-1">

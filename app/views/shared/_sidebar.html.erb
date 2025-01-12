@@ -1,0 +1,38 @@
+<div class="sidebar">
+  <a href="<%= student_dashboard_path(current_student) %>" class="item">
+    <div class="icon"><div class="icon">
+      <%= image_tag asset_path("icons/home-1-svgrepo-com.svg"), alt: "Dashboard Icon", style: "width: 1em; height: 1em;" %>
+    </div></div>
+    <div class="text">Dashboard</div>
+  </a>
+  <a href="<%= profile_student_path(current_student) %>" class="item">
+    <div class="icon"><div class="icon">
+      <%= image_tag asset_path("icons/student-cap-svgrepo-com.svg"), alt: "Dashboard Icon", style: "width: 1em; height: 1em;" %>
+    </div></div>
+    <div class="text">Student Profile</div>
+  </a>
+  <a href="<%= merit_student_path(current_student) %>" class="item">
+    <div class="icon"><div class="icon">
+      <%= image_tag asset_path("icons/award-svgrepo-com.svg"), alt: "Dashboard Icon", style: "width: 1em; height: 1em;" %>
+    </div></div>
+    <div class="text">Merit-Demerit</div>
+  </a>
+  <a href="<%= exam_student_path(current_student) %>" class="item">
+    <div class="icon"><div class="icon">
+      <%= image_tag asset_path("icons/books-svgrepo-com.svg"), alt: "Dashboard Icon", style: "width: 1em; height: 1em;" %>
+    </div></div>
+    <div class="text">Exam Report</div>
+  </a>
+  <a href="<%= student_canteen_path(current_student) %>" class="item">
+    <div class="icon"><div class="icon">
+      <%= image_tag asset_path("icons/food-svgrepo-com.svg"), alt: "Dashboard Icon", style: "width: 1em; height: 1em;" %>
+    </div></div>
+    <div class="text">Canteen Fees</div>
+  </a>
+  <%= button_to logout_path, method: :delete, class: "logout-btn", style: "margin-top: auto;" do %>
+    <div class="icon"><div class="icon">
+      <%= image_tag asset_path("icons/logout-2-svgrepo-com.svg"), alt: "Dashboard Icon", style: "width: 1em; height: 1em;" %>
+    </div></div>
+    <div class="text">Logout</div>
+  <% end %>
+</div>

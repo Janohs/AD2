@@ -102,17 +102,17 @@ h1 {
     background-color: #FF8A08; /* Darker shade on hover */
 }
 
-/* app/assets/stylesheets/dashboard.scss */
+/* Sidebar styles */
 .sidebar {
   background: linear-gradient(to bottom, #FFA500, #FF8C00);
-  width: 60px;
+  width: 85px;
   height: 90vh;
   position: fixed;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  padding-top: 20px;
-  transition: width 0.3s, box-shadow 0.3s;
+  padding: 20px 10px;
+  transition: width 0.3s ease, box-shadow 0.3s ease;
   overflow: hidden;
   left: 20px;
   top: 50%;
@@ -123,29 +123,36 @@ h1 {
 }
 
 .sidebar:hover {
-  width: 200px;
+  width: 220px;
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
 
 .sidebar .item {
   display: flex;
   align-items: center;
-  padding: 10px;
+  padding: 12px;
   width: 100%;
   text-decoration: none;
   color: white;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  transition: background-color 0.3s ease;
+}
+
+.sidebar .item:hover {
+  background-color: rgba(255, 255, 255, 0.2);
 }
 
 .sidebar .icon {
-  font-size: 2rem;
-  margin-right: 10px;
+  font-size: 1.8rem;
+  margin-right: 12px;
   width: 40px;
   text-align: center;
 }
 
 .sidebar .text {
   opacity: 0;
-  transition: opacity 0.3s;
+  transition: opacity 0.3s ease;
   white-space: nowrap;
 }
 
@@ -153,6 +160,30 @@ h1 {
   opacity: 1;
 }
 
+.sidebar-footer {
+  margin-top: auto;
+  padding: 20px;
+}
+
+/* Logout button styling */
+.logout-btn {
+  width: 100%;
+  background: none;
+  border: none;
+  color: white;
+  padding: 12px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  border-radius: 8px;
+}
+
+.logout-btn:hover {
+  background-color: #E57E0C;
+}
+
+/* Overlay styles */
 .overlay {
   position: fixed;
   top: 0;
@@ -174,32 +205,6 @@ h1 {
   visibility: visible;
 }
 
-.container-fluid {
-  position: relative;
-  z-index: 1;
-}
-
-.sidebar-footer {
-  margin-top: auto;
-  padding: 20px;
-}
-
-.logout-btn {
-  width: 100%;
-  background: none;
-  border: none;
-  color: #fff;
-  padding: 10px;
-  display: flex;
-  align-items: center;
-  cursor: pointer;
-  transition: background-color 0.3s;
-  margin-top: auto;
-}
-
-.logout-btn:hover {
-  background-color: #E57E0C;
-}
   
   .content {
     display: flex;
