@@ -1,4 +1,7 @@
-
+<!-- Dashboard Button -->
+<div class="dashboard-button-container">
+  <%= link_to 'Back to Admin Dashboard', admin_dashboard_path(session[:admin_id]), class: 'btn btn-primary', style: "background-color: #FF8A08; border-color: #FF8A08; position: absolute; top: 10px; left: 10px; z-index: 1000;" %>
+</div>
   <!-- Header Section -->
   <div class="text-center mb-4">
     <h1 class="page-title">Verify Merit-Demerit</h1>
@@ -138,43 +141,69 @@
         font-size: 0.85rem;
         font-weight: 600;
     }
-
-    /* Pagination Styles */
     .pagination-container {
-        text-align: center;
-        margin-top: 20px;
+        display: flex; /* Flexbox layout */
+        justify-content: center; /* Center content horizontally */
+        align-items: center; /* Center content vertically */
+        gap: 10px; /* Adds spacing between page numbers and buttons */
+        margin-top: 20px; /* Keep existing vertical margin */
+
     }
 
-    .pagination-container .pagination {
-        display: inline-block;
+    .pagination-container button,
+    .pagination-container a {
+        display: inline-block; /* Make buttons and links inline-block for proper alignment */
+        padding: 8px 12px; /* Space inside pagination items */
+        text-decoration: none; /* Remove underline from links */
+        border: 2px solid #FF921A; /* Orange border */
+        background-color: white; /* White background */
+        color: #FF921A; /* Orange text */
+        font-weight: bold; /* Make the text bold */
+        border-radius: 4px; /* Slight rounded corners */
+        cursor: pointer; /* Change cursor to pointer on hover */
+        transition: all 0.3s ease; /* Smooth hover effect */
+        outline: none; /* Removes the blue outline on focus/active */
+        margin: 10px;
+
     }
 
-    .pagination-container .pagination a,
-    .pagination-container .pagination span {
-        margin: 0 4px;
-        padding: 6px 12px;
-        font-size: 0.9rem;
-        color: #ffffff;
-        background-color: #FF921A;
-        border: 1px solid #FF921A;
-        border-radius: 4px;
-        text-decoration: none;
-        transition: all 0.2s ease-in-out;
+    /* Hover state for buttons/links */
+    .pagination-container button:hover,
+    .pagination-container a:hover {
+        background-color: #FF921A; /* Orange background */
+        color: white; /* White text */
+        border-color: #FF921A; /* Ensure the border remains orange */
     }
 
-    .pagination-container .pagination a {
-        background-color: #ffffff;
-        color: #FF921A;
+    /* Active state for buttons */
+    .pagination-container button:active,
+    .pagination-container a:active {
+        background-color: #FF921A; /* Orange background */
+        color: white; /* White text */
+        border-color: #FF921A; /* Keep the border orange */
+        outline: none; /* Ensure no default focus styles are applied */
     }
 
-    .pagination-container .pagination a:hover {
-        background-color: #FF921A;
-        color: #ffffff;
+    /* Focus state for buttons */
+    .pagination-container button:focus,
+    .pagination-container a:focus {
+        outline: none; /* Remove focus outline to match custom styles */
+        background-color: #FF921A; /* Keep orange background when focused */
+        color: white; /* White text */
+        border-color: #FF921A; /* Border remains orange */
     }
 
-    .pagination-container .active span {
-        background-color: #FF921A;
-        color: #ffffff;
-        border: 1px solid #FF921A;
+    .page-item.active .page-link {
+        z-index: 3; /* Retain Bootstrap's z-index for layering */
+        color: white; /* White text for the active button */
+        background-color: #FF921A; /* Orange background for the active button */
+        border-color: #FF921A; /* Orange border for the active button */
+    }
+
+    /* Optional: Ensure hover styles for active buttons stay consistent */
+    .page-item.active .page-link:hover {
+        color: white; /* Keep text white on hover */
+        background-color: #FF921A; /* Ensure background remains orange */
+        border-color: #FF921A; /* Ensure border remains orange */
     }
 </style>
