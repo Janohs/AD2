@@ -29,7 +29,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  background-image: url('/assets/background.png');
+  background-image: url(<%= asset_path('background.png') %>); /* Use asset_path helper */
   background-size: cover;
   background-attachment: fixed;
   background-position: center;

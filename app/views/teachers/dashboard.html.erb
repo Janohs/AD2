@@ -105,8 +105,8 @@
           flex-direction: column;
           text-align: center;
           padding: 20px;
-          background-color: #f9fafb;
-          border: 1px solid #FF921A;
+          background-color: #FF921A;
+          border: 1px solid #f9fafb;
           border-radius: 12px;
           box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
           transition: transform 0.2s;
@@ -146,11 +146,11 @@
     <div class="admin-buttons">
       <a href="<%= teacher_exam_report_path(@teachers) %>" class="highlight-box">
         <span class="stats-number">📚</span>
-        <p>Examination</p>
+        <p style="color: aliceblue" >Examination</p>
       </a>
       <a href="<%= teacher_merit_demerit_path(@teachers) %>" class="highlight-box">
         <span class="stats-number">📋</span>
-        <p>Merit-Demerit</p>
+        <p style="color: aliceblue" >Merit-Demerit</p>
       </a>
     </div>
   </div>
