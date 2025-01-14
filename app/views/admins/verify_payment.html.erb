@@ -6,7 +6,33 @@
     <h1 class="page-title">Verify Payment</h1>
     <p class="text-muted">Here you can verify payments.</p>
   </div>
+<!-- Filter Form -->
+<div class="filter-form" style="margin-bottom: 20px;">
+  <%= form_with(url: verify_payment_admins_path, method: :get, local: true, class: "row g-3") do |form| %>
 
+    <!-- Status Filter -->
+    <div class="col-md-4">
+      <%= form.label :status, "Filter by Status", class: "form-label" %>
+      <%= form.select :status, [["All", ""], ["Verified", "verified"], ["Unverified", "unverified"]],
+                      { selected: params[:status], prompt: "Select Status" },
+                      class: "form-control" %>
+    </div>
+
+    <!-- Class Filter -->
+    <div class="col-md-4">
+      <%= form.label :class, "Filter by Class", class: "form-label" %>
+      <%= form.select :class, [["All", ""]] + Student.select(:StudentClass).distinct.pluck(:StudentClass),
+                      { selected: params[:class] },
+                      class: "form-control" %>
+    </div>
+
+    <!-- Submit Button -->
+    <div class="col-md-4 align-self-end">
+      <%= form.submit "Filter", class: "btn btn-primary" %>
+    </div>
+
+  <% end %>
+</div>
 <!-- Payment Table Section -->
 <div class="table-responsive">
   <table class="table table-striped table-hover align-middle">
