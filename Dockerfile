@@ -37,10 +37,6 @@ RUN apt-get update -qq && \
     rm -rf /var/lib/apt/lists /var/cache/apt/archives
 
 
-RUN bundle install --verbose && \
-    rm -rf ~/.bundle/ "${BUNDLE_PATH}"/ruby/*/cache "${BUNDLE_PATH}"/ruby/*/bundler/gems/*/.git
-# RUN bundle exec bootsnap precompile --gemfile  # Temporarily skip this step
-
 # Copy application code
 COPY . .
 
