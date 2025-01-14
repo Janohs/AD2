@@ -39,6 +39,11 @@ RUN apt-get update -qq && \
 # Copy application code
 COPY . .
 
+# Install gems
+COPY Gemfile Gemfile.lock ./
+RUN bundle install --jobs 4 --retry 3
+
+
 ## Precompile bootsnap code for faster boot times
 RUN bundle exec bootsnap precompile app/ lib/
 
