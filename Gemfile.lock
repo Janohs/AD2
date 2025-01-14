@@ -370,7 +370,6 @@ DEPENDENCIES
   pg
   prawn
   prawn-table
-  psych (<= 5.1.1)
   puma (>= 5.0)
   rails (~> 7.2.2)
   rubocop-rails-omakase
@@ -383,4 +382,4 @@ DEPENDENCIES
   web-console
 
 BUNDLED WITH
-   2.5.16
+   2.6.2
