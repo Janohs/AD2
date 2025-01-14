@@ -22,6 +22,7 @@ gem "jbuilder"
 
 gem "http"
 
+gem 'psych', '<= 5.1.1'
 
 # pagination
 gem "kaminari"
