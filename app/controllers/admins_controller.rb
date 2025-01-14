@@ -16,7 +16,21 @@ class AdminsController < ApplicationController
   end
 
   def verify_merit_demerit
-    @merits = Merit.page(params[:page]).per(10) # Paginate merits, 10 per page
+    # Start with all merits
+    merits = Merit.page(params[:page]).per(10)
+
+    # Filter by status if provided
+    if params[:status].present?
+      merits = merits.where(status: params[:status] == "verified")
+    end
+
+    # Filter by class if provided
+    if params[:class].present?
+      merits = merits.joins("INNER JOIN students ON students.\"StudentID\" = merits.\"StudentID\"")
+                     .where("students.\"StudentClass\" = ?", params[:class])
+    end
+
+    @merits = merits
   end
 
   def accept_merit
@@ -26,14 +40,36 @@ class AdminsController < ApplicationController
   end
 
   def class_ranking
-    @students = Student.joins(subjects: :grades)
-                       .select("students.*, AVG(grades.\"Grade\"::numeric) AS average_grade")
-                       .group("StudentID")
-                       .order("average_grade DESC")
+    # Start with all students
+    students = Student.joins(subjects: :grades)
+                      .select("students.*, AVG(grades.\"Grade\"::numeric) AS average_grade")
+                      .group("StudentID")
+                      .order("average_grade DESC")
+
+    # Filter by class if provided
+    if params[:class].present?
+      students = students.where("students.\"StudentClass\" = ?", params[:class])
+    end
+
+    @students = students
   end
 
   def verify_payment
-    @payments = Payment.all # Fetch all payments
+    # Start with all payments
+    payments = Payment.all
+
+    # Filter by status if provided
+    if params[:status].present?
+      payments = payments.where(status: params[:status] == "verified")
+    end
+
+    # Filter by class if provided
+    if params[:class].present?
+      payments = payments.joins("INNER JOIN students ON students.\"StudentID\" = payments.\"StudentID\"")
+                         .where("students.\"StudentClass\" = ?", params[:class])
+    end
+
+    @payments = payments.page(params[:page]).per(10) # Paginate payments, 10 per page
   end
 
   def verify_payment_action

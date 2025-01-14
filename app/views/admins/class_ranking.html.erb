@@ -8,6 +8,26 @@
     <p class="text-muted">Here you can view and manage class rankings.</p>
   </div>
 
+<!-- Filter Form -->
+<div class="filter-form">
+  <%= form_with(url: class_ranking_admins_path, method: :get, local: true, class: "row g-3") do |form| %>
+
+    <!-- Class Filter -->
+    <div class="col-md-6">
+      <%= form.label :class, "Filter by Class", class: "form-label" %>
+      <%= form.select :class, [["All", ""]] + Student.select(:StudentClass).distinct.pluck(:StudentClass),
+                      { selected: params[:class] },
+                      class: "form-control" %>
+    </div>
+
+    <!-- Submit Button -->
+    <div class="col-md-6 align-self-end">
+      <%= form.submit "Filter", class: "btn btn-primary" %>
+    </div>
+
+  <% end %>
+</div>
+
   <!-- Ranking Table Section -->
   <div class="table-responsive">
     <table class="table table-striped table-hover align-middle">
@@ -67,6 +87,12 @@
     /* Table Section */
     .table-responsive {
         margin-top: 20px;
+    }
+
+    .btn-primary, .btn-primary:hover {
+        background-color: #FF921A;
+        border-color: #FF921A;
+        color: white;
     }
 
     .table {
