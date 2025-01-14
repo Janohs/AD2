@@ -7,15 +7,14 @@ WORKDIR /rails
 
 # Install base packages
 RUN apt-get update -qq && \
-    apt-get install --no-install-recommends -y curl libjemalloc2 libvips sqlite3 && \
+    apt-get install --no-install-recommends -y curl apt-transport-https ca-certificates libjemalloc2 libvips sqlite3 && \
     rm -rf /var/lib/apt/lists /var/cache/apt/archives
 
 # Install Node.js and Yarn
-RUN curl -sL https://deb.nodesource.com/setup_16.x | bash - && \
+RUN curl -fsSL https://deb.nodesource.com/setup_22.x | bash - && \
     apt-get install -y nodejs && \
-    apt-get install -y npm && \
     npm install -g yarn && \
-    rm -rf /var/lib/apt/lists /var/cache/apt/archives
+    apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Install PostgreSQL development libraries
 RUN apt-get update -qq && \
