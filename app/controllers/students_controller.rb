@@ -33,7 +33,16 @@ class StudentsController < ApplicationController
 
   def dashboard
     @student = Student.find(params[:id])
-    # Add any additional logic needed for the student's dashboard
+
+    # Fetch total merits and demerits
+    @total_merits = Merit.where(StudentID: @student.StudentID, status: true).sum(:meritPoint)
+
+    # Fetch total demerits (negative "meritPoint" values, absolute sum)
+    @total_demerits = Merit.where(StudentID: @student.StudentID, status: true)
+                           .where('"meritPoint" < 0')
+                           .sum('"meritPoint"').abs.to_i
+
+
   end
 
   def canteen
@@ -65,7 +74,21 @@ class StudentsController < ApplicationController
 
   def profile
     @student = Student.find(params[:id])
-    # Add any logic needed for the student's profile page
+    # Fetch total merits and demerits
+    @total_merits = Merit.where(StudentID: @student.StudentID, status: true)
+                         .where('"meritPoint" > 0')
+                         .sum('"meritPoint"')
+
+    @total_demerits = Merit.where(StudentID: @student.StudentID, status: true)
+                           .where('"meritPoint" < 0')
+                           .sum('"meritPoint"').abs
+
+    # Fetch payment information
+    @total_paid = Payment.where(StudentID: @student.StudentID, status: true).sum('CAST("Amount" AS decimal)')
+
+
+    # Fetch subjects and grades for the exam summary
+    @subjects = Subject.where(StudentID: @student.id).includes(:grades)
   end
 
   def merit

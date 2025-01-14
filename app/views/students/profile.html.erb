@@ -1,59 +1,136 @@
-<!-- app/views/students/profile.html.erb -->
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Student Profile</title>
-    <%= stylesheet_link_tag 'application', media: 'all' %>
-    <style>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Student Profile</title>
+  <%= stylesheet_link_tag 'application', media: 'all' %>
+  <style>
       body {
-        display: flex;
+          display: flex;
       }
-          .profile-container {
-            margin-left: 270px;
-            width: 60%; /* Percentage-based width */
-            max-width: 1200px; /* Increased max width */
-            min-width: 600px; /* Prevent container from getting too narrow */
-            margin-top: 50px;
-            padding: 20px;
-            background-color: #FFFFFF;
-            border-radius: 15px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-          }
+      .profile-container {
+          margin-left: 270px;
+          width: 60%;
+          max-width: 1200px;
+          min-width: 600px;
+          margin-top: 50px;
+          padding: 20px;
+          background-color: #FFFFFF;
+          border-radius: 15px;
+          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      }
       .profile-header {
-        text-align: center;
-        margin-bottom: 20px;
+          text-align: center;
+          margin-bottom: 20px;
       }
       .profile-header h1 {
-        font-family: 'Montserrat', sans-serif;
-        font-size: 24px;
-        color: #FF8C00;
+          font-family: 'Montserrat', sans-serif;
+          font-size: 24px;
+          color: #FF8C00;
       }
-      .profile-details p {
-        font-family: 'Montserrat', sans-serif;
-        font-size: 16px;
-        color: #333;
-        margin: 10px 0;
+      .profile-details p, .summary-box p {
+          font-family: 'Montserrat', sans-serif;
+          font-size: 16px;
+          color: #333;
+          margin: 10px 0;
       }
-      .profile-details p strong {
-        color: #FF8C00;
+      .profile-details p strong,
+      .summary-box p strong {
+          color: #FF8C00;
       }
-    </style>
-  </head>
-  <body>
-  <%= render 'shared/sidebar' %>
-    <div class="profile-container">
-      <div class="profile-header">
-        <h1>Profile for <%= @student.StudentName %></h1>
-      </div>
-      <div class="profile-details">
-        <p><strong>Name:</strong> <%= @student.StudentName %></p>
-        <p><strong>Grade:</strong> <%= @student.StudentGrade %></p>
-        <p><strong>Class:</strong> <%= @student.StudentClass %></p>
-        <p><strong>Student ID:</strong> <%= @student.StudentID %></p>
-        <p><strong>Email:</strong> <%= @student.email %></p>
-      </div>
+      .summary-section {
+          display: flex;
+          flex-direction: column; /* Stacks the boxes in rows */
+          gap: 20px; /* Adds vertical spacing between rows */
+          margin-top: 30px; /* Keeps the same vertical margin from before */
+      }
+
+      .summary-box {
+          width: 100%; /* Ensures each box spans the full width of the container */
+          background-color: #F9F9F9;
+          border-radius: 10px;
+          padding: 15px 20px;
+          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+      .links-section {
+          display: flex;
+          gap: 15px;
+          margin-top: 30px;
+          justify-content: center;
+      }
+      .link-box {
+          flex: 1;
+          text-align: center;
+          background-color: #FF8C00;
+          padding: 15px 10px;
+          border-radius: 10px;
+          color: #FFFFFF;
+          font-family: 'Montserrat', sans-serif;
+          font-size: 18px;
+          text-decoration: none;
+          font-weight: bold;
+          box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+          transition: background-color 0.3s ease;
+      }
+      .link-box:hover {
+          background-color: #FF6A00;
+      }
+  </style>
+</head>
+<body>
+<%= render 'shared/sidebar' %>
+<div class="profile-container">
+  <!-- Profile Header -->
+  <div class="profile-header">
+    <h1>Profile for <%= @student.StudentName %></h1>
+  </div>
+
+  <!-- Profile Details -->
+  <div class="profile-details">
+    <p><strong>Name:</strong> <%= @student.StudentName %></p>
+    <p><strong>Grade:</strong> <%= @student.StudentGrade %></p>
+    <p><strong>Class:</strong> <%= @student.StudentClass %></p>
+    <p><strong>Student ID:</strong> <%= @student.StudentID %></p>
+    <p><strong>Email:</strong> <%= @student.email %></p>
+  </div>
+
+  <!-- Summary Section -->
+  <div class="summary-section">
+    <!-- Merits and Demerits -->
+    <div class="summary-box">
+      <p><strong>Total Merits:</strong> <%= @total_merits || 0 %></p>
+      <p><strong>Total Demerits:</strong> <%= @total_demerits || 0 %></p>
     </div>
-  </body>
+
+    <!-- Payment Summary -->
+    <div class="summary-box">
+      <p><strong>Total Paid:</strong> RM <%= @total_paid || 0.00 %></p>
+
+    </div>
+
+    <!-- Exam Summary -->
+    <div class="summary-box">
+      <p><strong>Latest Grades:</strong></p>
+      <ul>
+        <% if @subjects.any? %>
+          <% @subjects.each do |subject| %>
+            <li><%= subject.Name %>: <%= subject.grades.map(&:Grade).join(", ") || "No grades yet" %></li>
+          <% end %>
+        <% else %>
+          <li>No grades available.</li>
+        <% end %>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Links Section -->
+  <div class="links-section" style="display: none;">
+    <a href="<%= merit_student_path(@student) %>" class="link-box">View Detailed Merits</a>
+    <a href="<%= student_canteen_path(@student) %>" class="link-box">Check Canteen Payments</a>
+    <a href="<%= exam_student_path(@student) %>" class="link-box">View Exam Results</a>
+    <a href="<%= download_exam_report_student_path(@student) %>" class="link-box">Download Exam Report</a>
+  </div>
+</div>
+</body>
 </html>
