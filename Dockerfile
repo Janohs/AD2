@@ -5,13 +5,9 @@ FROM ruby:$RUBY_VERSION-slim AS base
 # Rails app lives here
 WORKDIR /rails
 
-# Install packages needed to build gems and other dependencies
+# Install base packages
 RUN apt-get update -qq && \
-    apt-get install --no-install-recommends -y \
-        build-essential \
-        git \
-        pkg-config \
-        libyaml-dev && \
+    apt-get install --no-install-recommends -y curl libjemalloc2 libvips sqlite3 && \
     rm -rf /var/lib/apt/lists /var/cache/apt/archives
 
 # Install Node.js and Yarn
@@ -20,10 +16,6 @@ RUN curl -sL https://deb.nodesource.com/setup_14.x | bash - && \
     apt-get install -y npm && \
     npm install -g yarn && \
     rm -rf /var/lib/apt/lists /var/cache/apt/archives
-
-RUN bundle install --verbose && \
-    rm -rf ~/.bundle/ "${BUNDLE_PATH}"/ruby/*/cache "${BUNDLE_PATH}"/ruby/*/bundler/gems/*/.git && \
-    bundle exec bootsnap precompile --gemfile
 
 # Install PostgreSQL development libraries
 RUN apt-get update -qq && \
